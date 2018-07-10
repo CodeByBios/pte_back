@@ -12,24 +12,23 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
-public class Role {
+public class Niveau {
 
 	@Id
 	@GeneratedValue
-	Long IdRole;
+	Long IdNiveau;
 	
 	@NotNull
 	@Size(min = 2, max = 255)
-	String identite;
+	String Libelle;
 
-	public Role(@NotNull @Size(min = 2, max = 255) String identite) {
+	public Niveau(@NotNull @Size(min = 2, max = 255) String libelle) {
 		super();
-		this.identite = identite;
+		Libelle = libelle;
 	}
 
-	public Role() {
+	public Niveau() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
 }

@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,19 +20,29 @@ public class Utilisateur {
 	@GeneratedValue
 	Long IdUtilisateur;
 	
+	@NotNull
+	@Size(min = 2, max = 255)
 	String nom;
 	
+	@NotNull
+	@Size(min = 2, max = 255)
 	String prenom;
 	
+	@NotNull
+	@Size(min = 2, max = 255)
 	String login;
 	
+	@NotNull
+	@Size(min = 2, max = 255)
 	String password;
 	
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "id_role")
+	@JoinColumn(name = "role_id")
 	Role role;
 
-	public Utilisateur(String nom, String prenom, String login, String password, Role role) {
+	public Utilisateur(@NotNull @Size(min = 2, max = 255) String nom, @NotNull @Size(min = 2, max = 255) String prenom,
+			@NotNull @Size(min = 2, max = 255) String login, @NotNull @Size(min = 2, max = 255) String password,
+			Role role) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
@@ -43,5 +55,4 @@ public class Utilisateur {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
 }
