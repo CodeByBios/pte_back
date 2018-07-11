@@ -1,5 +1,7 @@
 package com.sodifrance.pte.model.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,23 +14,27 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
-public class TypeQuestion {
+public class TypeQuestion implements Serializable {
+
+	private static final long serialVersionUID = 4560437636058348649L;
 
 	@Id
 	@GeneratedValue
-	Long IdTypeQ;
+	Long idTypeQuestion;
 	
 	@NotNull
 	@Size(min = 2, max = 255)
-	String Libelle;
+	String libelle;
 
-	public TypeQuestion(@NotNull @Size(min = 2, max = 255) String libelle) {
-		super();
-		Libelle = libelle;
-	}
 
 	public TypeQuestion() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public TypeQuestion(Long idTypeQuestion, @NotNull @Size(min = 2, max = 255) String libelle) {
+		super();
+		this.idTypeQuestion = idTypeQuestion;
+		this.libelle = libelle;
 	}
 }

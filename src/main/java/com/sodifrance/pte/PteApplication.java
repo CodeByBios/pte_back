@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
 @EnableAutoConfiguration
-@EntityScan(basePackages = {"com.sodifrance.model.entity"})  // scan JPA entities
+@EntityScan(basePackages = {"com.sodifrance.pte.model.entity"})  // scan JPA entities
 public class PteApplication {
 
 	public static void main(String[] args) {

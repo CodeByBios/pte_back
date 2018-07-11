@@ -1,5 +1,6 @@
 package com.sodifrance.pte.model.entity;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,18 +21,20 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
-public class Question {
+public class Question implements Serializable {
 	
+	private static final long serialVersionUID = 5539470872792087648L;
+
 	@Id
 	@GeneratedValue
-	Long IdQuestion;
+	Long idQuestion;
 	
 	@NotNull
 	@Size(min = 2, max = 755)
-	String Libelle;
+	String libelle;
 	
 	@NotNull
-	Boolean Etat;
+	Boolean etat;
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	Set<Reponse> reponses = new HashSet<>();
@@ -47,22 +50,25 @@ public class Question {
 	TypeQuestion typeQuestion;
 	
 	@ManyToMany
-    private Set<Candidat> Candidats = new HashSet<>();
-
-	public Question(@NotNull @Size(min = 2, max = 255) String libelle, @NotNull Boolean etat, Set<Reponse> reponses,
-			Set<Langage> langages, Set<Niveau> niveaux, TypeQuestion typeQuestion) {
-		super();
-		Libelle = libelle;
-		Etat = etat;
-		this.reponses = reponses;
-		this.langages = langages;
-		this.niveaux = niveaux;
-		this.typeQuestion = typeQuestion;
-	}
+    private Set<Candidat> candidats = new HashSet<>();
 
 	public Question() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public Question(Long idQuestion, @NotNull @Size(min = 2, max = 755) String libelle, @NotNull Boolean etat,
+			Set<Reponse> reponses, Set<Langage> langages, Set<Niveau> niveaux, TypeQuestion typeQuestion,
+			Set<Candidat> candidats) {
+		super();
+		this.idQuestion = idQuestion;
+		this.libelle = libelle;
+		this.etat = etat;
+		this.reponses = reponses;
+		this.langages = langages;
+		this.niveaux = niveaux;
+		this.typeQuestion = typeQuestion;
+		this.candidats = candidats;
 	}
 	
 }

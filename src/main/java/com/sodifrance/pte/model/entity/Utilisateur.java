@@ -1,5 +1,7 @@
 package com.sodifrance.pte.model.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,11 +16,13 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
-public class Utilisateur {
+public class Utilisateur implements Serializable {
+
+	private static final long serialVersionUID = 6226581242826378264L;
 
 	@Id
 	@GeneratedValue
-	Long IdUtilisateur;
+	Long idUtilisateur;
 	
 	@NotNull
 	@Size(min = 2, max = 255)
@@ -40,19 +44,20 @@ public class Utilisateur {
 	@JoinColumn(name = "role_id")
 	Role role;
 
-	public Utilisateur(@NotNull @Size(min = 2, max = 255) String nom, @NotNull @Size(min = 2, max = 255) String prenom,
-			@NotNull @Size(min = 2, max = 255) String login, @NotNull @Size(min = 2, max = 255) String password,
-			Role role) {
+	public Utilisateur() {
 		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Utilisateur(Long idUtilisateur, @NotNull @Size(min = 2, max = 255) String nom,
+			@NotNull @Size(min = 2, max = 255) String prenom, @NotNull @Size(min = 2, max = 255) String login,
+			@NotNull @Size(min = 2, max = 255) String password, Role role) {
+		super();
+		this.idUtilisateur = idUtilisateur;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.login = login;
 		this.password = password;
 		this.role = role;
-	}
-
-	public Utilisateur() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 }

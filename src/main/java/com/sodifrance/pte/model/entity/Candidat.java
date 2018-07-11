@@ -1,5 +1,6 @@
 package com.sodifrance.pte.model.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,26 +22,28 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
-public class Candidat {
+public class Candidat implements Serializable {
+	
+	private static final long serialVersionUID = -758247213719000953L;
 
 	@Id
 	@GeneratedValue
-	Long IdCandidat;
+	Long idCandidat;
 	
 	@NotNull
-	Long Temps;
-	
-	@NotNull
-	@Size(min = 2, max = 255)
-	String Nom;
+	Long temps;
 	
 	@NotNull
 	@Size(min = 2, max = 255)
-	String Prenom;
+	String nom;
 	
 	@NotNull
 	@Size(min = 2, max = 255)
-	String Note;
+	String prenom;
+	
+	@NotNull
+	@Size(min = 2, max = 255)
+	String note;
 	
 	@NotNull
 	Timestamp date;
@@ -57,18 +60,24 @@ public class Candidat {
     )
     Set<Question> questions = new HashSet<>();
 
-	public Candidat(@NotNull Long temps, @NotNull @Size(min = 2, max = 255) String nom,
-			@NotNull @Size(min = 2, max = 255) String prenom, @NotNull Timestamp date, Utilisateur utlisateur) {
-		super();
-		Temps = temps;
-		Nom = nom;
-		Prenom = prenom;
-		this.date = date;
-		this.utlisateur = utlisateur;
-	}
+	
 
 	public Candidat() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public Candidat(Long idCandidat, @NotNull Long temps, @NotNull @Size(min = 2, max = 255) String nom,
+			@NotNull @Size(min = 2, max = 255) String prenom, @NotNull @Size(min = 2, max = 255) String note,
+			@NotNull Timestamp date, Utilisateur utlisateur, Set<Question> questions) {
+		super();
+		this.idCandidat = idCandidat;
+		this.temps = temps;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.note = note;
+		this.date = date;
+		this.utlisateur = utlisateur;
+		this.questions = questions;
 	}
 }
