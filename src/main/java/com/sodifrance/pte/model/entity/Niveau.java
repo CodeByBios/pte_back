@@ -1,8 +1,10 @@
-package com.sodifrance.model.entity;
+package com.sodifrance.pte.model.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -12,24 +14,27 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
-public class Role {
+public class Niveau {
 
 	@Id
 	@GeneratedValue
-	Long IdRole;
+	Long IdNiveau;
 	
 	@NotNull
 	@Size(min = 2, max = 255)
-	String identite;
+	String Libelle;
+	
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "question_id")
+	Question question;
 
-	public Role(@NotNull @Size(min = 2, max = 255) String identite) {
+	public Niveau(@NotNull @Size(min = 2, max = 255) String libelle) {
 		super();
-		this.identite = identite;
+		Libelle = libelle;
 	}
 
-	public Role() {
+	public Niveau() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
 }

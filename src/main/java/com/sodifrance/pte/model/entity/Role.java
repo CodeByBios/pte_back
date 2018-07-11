@@ -1,4 +1,4 @@
-package com.sodifrance.model.entity;
+package com.sodifrance.pte.model.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,23 +12,24 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
-public class Niveau {
+public class Role {
 
 	@Id
 	@GeneratedValue
-	Long IdNiveau;
+	Long IdRole;
 	
 	@NotNull
 	@Size(min = 2, max = 255)
-	String Libelle;
+	String identite;
 
-	public Niveau(@NotNull @Size(min = 2, max = 255) String libelle) {
+	public Role(@NotNull @Size(min = 2, max = 255) String identite) {
 		super();
-		Libelle = libelle;
+		this.identite = identite;
 	}
 
-	public Niveau() {
+	public Role() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 }

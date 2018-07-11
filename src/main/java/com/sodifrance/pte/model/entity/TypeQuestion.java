@@ -1,4 +1,4 @@
-package com.sodifrance.model.entity;
+package com.sodifrance.pte.model.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,26 +12,22 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
-public class Reponse {
+public class TypeQuestion {
 
 	@Id
 	@GeneratedValue
-	Long IdReponse;
+	Long IdTypeQ;
 	
 	@NotNull
 	@Size(min = 2, max = 255)
 	String Libelle;
-	
-	@NotNull
-	Boolean ReponseJuste;
 
-	public Reponse(@NotNull String libelle, @NotNull Boolean reponseJuste) {
+	public TypeQuestion(@NotNull @Size(min = 2, max = 255) String libelle) {
 		super();
 		Libelle = libelle;
-		ReponseJuste = reponseJuste;
 	}
 
-	public Reponse() {
+	public TypeQuestion() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

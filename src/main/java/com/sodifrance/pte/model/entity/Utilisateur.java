@@ -1,4 +1,4 @@
-package com.sodifrance.model.entity;
+package com.sodifrance.pte.model.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

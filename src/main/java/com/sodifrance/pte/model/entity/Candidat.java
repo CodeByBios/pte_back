@@ -1,4 +1,4 @@
-package com.sodifrance.model.entity;
+package com.sodifrance.pte.model.entity;
 
 import java.sql.Timestamp;
 import java.util.HashSet;

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.connection.driver_class">org.gjt.mm.mysql.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/tpe</property>
+		<property name="hibernate.connection.username">brice</property>
+		<property name="hibernate.connection.password">brice</property>
+		<property name="hibernate.connection.pool_size">25</property>
+		<property name="hibernate.current_session_context_class">thread</property>
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+
+		<!-- Mapping files -->
+		<mapping resource="Candidat.hbm.xml" />
+		<mapping resource="Langage.hbm.xml" />
+		<mapping resource="Niveau.hbm.xml" />
+		<mapping resource="Question.hbm.xml" />
+		<mapping resource="Reponse.hbm.xml" />
+		<mapping resource="Role.hbm.xml" />
+		<mapping resource="TypeQuestion.hbm.xml" />
+		<mapping resource="Utilisateur.hbm.xml" />
+
+	</session-factory>
+
+
+</hibernate-configuration>

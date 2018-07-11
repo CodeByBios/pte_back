@@ -1,4 +1,4 @@
-package com.sodifrance.ws;
+package com.sodifrance.pte.ws;
 
 public class TestService {
 
