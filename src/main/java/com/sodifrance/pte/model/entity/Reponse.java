@@ -22,7 +22,7 @@ public class Reponse implements Serializable {
 
 	@Id
 	@GeneratedValue
-	Long ddReponse;
+	Long idReponse;
 	
 	@NotNull
 	@Size(min = 2, max = 255)
@@ -43,7 +43,7 @@ public class Reponse implements Serializable {
 	public Reponse(Long ddReponse, @NotNull @Size(min = 2, max = 255) String libelle, @NotNull Boolean reponseJuste,
 			Question question) {
 		super();
-		this.ddReponse = ddReponse;
+		this.idReponse = ddReponse;
 		this.libelle = libelle;
 		this.reponseJuste = reponseJuste;
 		this.question = question;
