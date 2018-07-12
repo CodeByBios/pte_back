@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,8 +22,8 @@ public class Reponse implements Serializable {
 	private static final long serialVersionUID = 1791048553759210923L;
 
 	@Id
-	@GeneratedValue
-	Long ddReponse;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	Long id;
 	
 	@NotNull
 	@Size(min = 2, max = 255)
@@ -40,10 +41,9 @@ public class Reponse implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Reponse(Long ddReponse, @NotNull @Size(min = 2, max = 255) String libelle, @NotNull Boolean reponseJuste,
+	public Reponse(@NotNull @Size(min = 2, max = 255) String libelle, @NotNull Boolean reponseJuste,
 			Question question) {
 		super();
-		this.ddReponse = ddReponse;
 		this.libelle = libelle;
 		this.reponseJuste = reponseJuste;
 		this.question = question;

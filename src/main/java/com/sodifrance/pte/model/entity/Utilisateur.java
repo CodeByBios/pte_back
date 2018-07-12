@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -14,15 +15,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Setter
 @Getter
+@Setter
 public class Utilisateur implements Serializable {
 
 	private static final long serialVersionUID = 6226581242826378264L;
 
 	@Id
-	@GeneratedValue
-	Long idUtilisateur;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	Long id;
 	
 	@NotNull
 	@Size(min = 2, max = 255)
@@ -49,11 +50,10 @@ public class Utilisateur implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Utilisateur(Long idUtilisateur, @NotNull @Size(min = 2, max = 255) String nom,
+	public Utilisateur(@NotNull @Size(min = 2, max = 255) String nom,
 			@NotNull @Size(min = 2, max = 255) String prenom, @NotNull @Size(min = 2, max = 255) String login,
 			@NotNull @Size(min = 2, max = 255) String password, Role role) {
 		super();
-		this.idUtilisateur = idUtilisateur;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.login = login;

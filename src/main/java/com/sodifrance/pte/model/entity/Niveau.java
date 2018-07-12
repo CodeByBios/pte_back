@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,8 +22,8 @@ public class Niveau implements Serializable {
 	private static final long serialVersionUID = -7388563887840282558L;
 
 	@Id
-	@GeneratedValue
-	Long idNiveau;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	Long id;
 	
 	@NotNull
 	@Size(min = 2, max = 255)
@@ -37,9 +38,8 @@ public class Niveau implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Niveau(Long idNiveau, @NotNull @Size(min = 2, max = 255) String libelle, Question question) {
+	public Niveau(@NotNull @Size(min = 2, max = 255) String libelle, Question question) {
 		super();
-		this.idNiveau = idNiveau;
 		this.libelle = libelle;
 		this.question = question;
 	}

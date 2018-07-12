@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -26,8 +27,8 @@ public class Question implements Serializable {
 	private static final long serialVersionUID = 5539470872792087648L;
 
 	@Id
-	@GeneratedValue
-	Long idQuestion;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	Long id;
 	
 	@NotNull
 	@Size(min = 2, max = 755)
@@ -57,11 +58,10 @@ public class Question implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Question(Long idQuestion, @NotNull @Size(min = 2, max = 755) String libelle, @NotNull Boolean etat,
+	public Question(@NotNull @Size(min = 2, max = 755) String libelle, @NotNull Boolean etat,
 			Set<Reponse> reponses, Set<Langage> langages, Set<Niveau> niveaux, TypeQuestion typeQuestion,
 			Set<Candidat> candidats) {
 		super();
-		this.idQuestion = idQuestion;
 		this.libelle = libelle;
 		this.etat = etat;
 		this.reponses = reponses;

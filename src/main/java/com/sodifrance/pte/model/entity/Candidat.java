@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -20,15 +21,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Setter
 @Getter
+@Setter
 public class Candidat implements Serializable {
 	
 	private static final long serialVersionUID = -758247213719000953L;
 
 	@Id
-	@GeneratedValue
-	Long idCandidat;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	Long id;
 	
 	@NotNull
 	Long temps;
@@ -61,17 +62,15 @@ public class Candidat implements Serializable {
     Set<Question> questions = new HashSet<>();
 
 	
-
 	public Candidat() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Candidat(Long idCandidat, @NotNull Long temps, @NotNull @Size(min = 2, max = 255) String nom,
+	public Candidat(@NotNull Long temps, @NotNull @Size(min = 2, max = 255) String nom,
 			@NotNull @Size(min = 2, max = 255) String prenom, @NotNull @Size(min = 2, max = 255) String note,
 			@NotNull Timestamp date, Utilisateur utlisateur, Set<Question> questions) {
 		super();
-		this.idCandidat = idCandidat;
 		this.temps = temps;
 		this.nom = nom;
 		this.prenom = prenom;

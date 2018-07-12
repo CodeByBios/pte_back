@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,8 +22,8 @@ public class Langage implements Serializable {
 	private static final long serialVersionUID = -891431424813158297L;
 
 	@Id
-	@GeneratedValue
-	Long idLangage;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	Long id;
 	
 	@NotNull
 	@Size(min = 2, max = 255)
@@ -38,9 +39,8 @@ public class Langage implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Langage(Long idLangage, @NotNull @Size(min = 2, max = 255) String libelle, Question question) {
+	public Langage(@NotNull @Size(min = 2, max = 255) String libelle, Question question) {
 		super();
-		this.idLangage = idLangage;
 		this.libelle = libelle;
 		this.question = question;
 	}
