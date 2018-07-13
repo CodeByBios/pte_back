@@ -76,6 +76,13 @@
 			<version>2.7.0</version>
 		</dependency>
 		
+		<!-- Model Mapper : permet de facilier la conversion Entity <-> DTO -->
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>1.1.0</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>

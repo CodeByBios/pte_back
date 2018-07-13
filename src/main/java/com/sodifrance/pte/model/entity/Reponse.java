@@ -32,20 +32,14 @@ public class Reponse implements Serializable {
 	@NotNull
 	Boolean reponseJuste;
 	
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "question_id")
-	Question question;
-
 	public Reponse() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Reponse(@NotNull @Size(min = 2, max = 255) String libelle, @NotNull Boolean reponseJuste,
-			Question question) {
+	public Reponse(@NotNull @Size(min = 2, max = 255) String libelle, @NotNull Boolean reponseJuste) {
 		super();
 		this.libelle = libelle;
 		this.reponseJuste = reponseJuste;
-		this.question = question;
 	}
 }

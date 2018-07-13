@@ -2,6 +2,7 @@ package com.sodifrance.pte.model.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -47,18 +48,14 @@ public class Candidat implements Serializable {
 	String note;
 	
 	@NotNull
-	Timestamp date;
+	LocalDateTime date;
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "utilisateur_id")
 	Utilisateur utlisateur;
 	
 	@ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(
-        name = "Candidat_Question", 
-        joinColumns = { @JoinColumn(name = "candidat_id") }, 
-        inverseJoinColumns = { @JoinColumn(name = "question_id") }
-    )
+	@JoinColumn(name = "question_id")
     Set<Question> questions = new HashSet<>();
 
 	
@@ -69,7 +66,7 @@ public class Candidat implements Serializable {
 
 	public Candidat(@NotNull Long temps, @NotNull @Size(min = 2, max = 255) String nom,
 			@NotNull @Size(min = 2, max = 255) String prenom, @NotNull @Size(min = 2, max = 255) String note,
-			@NotNull Timestamp date, Utilisateur utlisateur, Set<Question> questions) {
+			@NotNull LocalDateTime date, Utilisateur utlisateur, Set<Question> questions) {
 		super();
 		this.temps = temps;
 		this.nom = nom;

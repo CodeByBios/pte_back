@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -49,9 +48,6 @@ public class Question implements Serializable {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "typequestion_id")
 	TypeQuestion typeQuestion;
-	
-	@ManyToMany
-    private Set<Candidat> candidats = new HashSet<>();
 
 	public Question() {
 		super();
@@ -59,8 +55,7 @@ public class Question implements Serializable {
 	}
 
 	public Question(@NotNull @Size(min = 2, max = 755) String libelle, @NotNull Boolean etat,
-			Set<Reponse> reponses, Set<Langage> langages, Set<Niveau> niveaux, TypeQuestion typeQuestion,
-			Set<Candidat> candidats) {
+			Set<Reponse> reponses, Set<Langage> langages, Set<Niveau> niveaux, TypeQuestion typeQuestion) {
 		super();
 		this.libelle = libelle;
 		this.etat = etat;
@@ -68,7 +63,6 @@ public class Question implements Serializable {
 		this.langages = langages;
 		this.niveaux = niveaux;
 		this.typeQuestion = typeQuestion;
-		this.candidats = candidats;
 	}
 	
 }

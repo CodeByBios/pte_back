@@ -29,18 +29,14 @@ public class Niveau implements Serializable {
 	@Size(min = 2, max = 255)
 	String libelle;
 	
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "question_id")
-	Question question;
-
 	public Niveau() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Niveau(@NotNull @Size(min = 2, max = 255) String libelle, Question question) {
+	public Niveau(@NotNull @Size(min = 2, max = 255) String libelle) {
 		super();
 		this.libelle = libelle;
-		this.question = question;
 	}
+	
 }

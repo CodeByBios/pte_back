@@ -28,20 +28,14 @@ public class Langage implements Serializable {
 	@NotNull
 	@Size(min = 2, max = 255)
 	String libelle;
-	
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "question_id")
-	Question question;
-	
 
 	public Langage() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Langage(@NotNull @Size(min = 2, max = 255) String libelle, Question question) {
+	public Langage(@NotNull @Size(min = 2, max = 255) String libelle) {
 		super();
 		this.libelle = libelle;
-		this.question = question;
 	}
 }
