@@ -51,5 +51,5 @@ public class UtilisateurController {
 	public String getConnection(@RequestBody ConnectionDto connectionDto) {
 		return UtilisateurServiceImpl.getConnection(connectionDto.getLogin(), connectionDto.getPassword());
 	}
-
+	
 }

@@ -1,14 +1,14 @@
 package com.sodifrance.pte.model.dto;
 
-import java.util.Set;
+import java.util.List;
 
 import lombok.Data;
 
 @Data
 public class CreateTestDto {
 	
-	private Set<QuestionDto> questions;
+	private List<QuestionDto> questionsDto;
 	
-	private CandidatDto candidat;
+	private CandidatDto candidatDto;
 
 }

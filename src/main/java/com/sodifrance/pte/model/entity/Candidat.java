@@ -1,18 +1,16 @@
 package com.sodifrance.pte.model.entity;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
@@ -54,9 +52,8 @@ public class Candidat implements Serializable {
 	@JoinColumn(name = "utilisateur_id")
 	Utilisateur utlisateur;
 	
-	@ManyToMany(cascade = { CascadeType.ALL })
-	@JoinColumn(name = "question_id")
-    Set<Question> questions = new HashSet<>();
+	@ManyToMany(fetch = FetchType.LAZY)
+    List<Question> questions = new ArrayList<Question>();
 
 	
 	public Candidat() {
@@ -66,7 +63,7 @@ public class Candidat implements Serializable {
 
 	public Candidat(@NotNull Long temps, @NotNull @Size(min = 2, max = 255) String nom,
 			@NotNull @Size(min = 2, max = 255) String prenom, @NotNull @Size(min = 2, max = 255) String note,
-			@NotNull LocalDateTime date, Utilisateur utlisateur, Set<Question> questions) {
+			@NotNull LocalDateTime date, Utilisateur utlisateur, List<Question> questions) {
 		super();
 		this.temps = temps;
 		this.nom = nom;
