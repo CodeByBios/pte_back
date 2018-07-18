@@ -16,11 +16,10 @@ public interface QuestionService {
 
 	Question updateQuestion(Question pQuestion);
 
-	List<Question> getAllQuestion();
+	List<Question> getAllQuestions();
 
-	//List<Question> getAllQuestionByNiveauxAndLangagesAndTypeQuestion(Long pIdNiveau, Long pIdLangage,Long pIdTypeQuestion);
+	List<Question> getAllQuestionByNiveauxAndLangagesAndTypeQuestion(Niveau pNiveau, Langage pLangage, TypeQuestion pTypeQuestion);
 
-	List<Question> getAllQuestionByNiveauxAndLangagesAndTypeQuestion(Niveau pNiveau, Langage pLangage,
-			TypeQuestion pTypeQuestion);
+	List<Question> getAllQuestionsActives(Boolean actif);
 
 }

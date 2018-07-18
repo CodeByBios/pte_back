@@ -7,6 +7,8 @@ import lombok.Setter;
 @Setter
 public class UtilisateurDto {
 
+	private Long id;
+	
 	String nom;
 	
 	String prenom;
@@ -17,13 +19,14 @@ public class UtilisateurDto {
 	
 	Long roleId;
 
-	public UtilisateurDto(String nom, String prenom, String login, String password, Long roleId) {
+	public UtilisateurDto(String nom, String prenom, String login, String password, Long roleId, Long id) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
 		this.login = login;
 		this.password = password;
 		this.roleId = roleId;
+		this.id = id;
 	}
 
 	public UtilisateurDto() {

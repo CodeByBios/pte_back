@@ -13,6 +13,8 @@ import lombok.Data;
 @Data 
 public class CandidatDto {
 	
+	private Long id;
+	
 	private Long temps;
 	
 	private String nom;

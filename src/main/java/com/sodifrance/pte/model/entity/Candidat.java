@@ -41,7 +41,6 @@ public class Candidat implements Serializable {
 	@Size(min = 2, max = 255)
 	String prenom;
 	
-	@NotNull
 	@Size(min = 2, max = 255)
 	String note;
 	
