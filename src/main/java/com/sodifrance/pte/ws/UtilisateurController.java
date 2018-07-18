@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,24 +20,28 @@ import com.sodifrance.pte.service.UtilisateurService;
 
 
 @RestController
+//@RequestMapping("/utilisateurs") à remplacer par ceci @RequestMapping("/pte")
 @RequestMapping("/utilisateurs")
 @CrossOrigin
 public class UtilisateurController {
 
 	@Autowired
-	UtilisateurService UtilisateurServiceImpl;
+	UtilisateurService utilisateurService;
 	
 	    //retourne tout les utilisateurs
 		@GetMapping
 		public List<Utilisateur> getAllUtilisateurs() {
-			return UtilisateurServiceImpl.getAllUtilisateurs();
+			return utilisateurService.getAllUtilisateurs();
 		}
 		
+		//TODO à mettre le Pahs ("/utilisateurs") ici @PostMapping(value = "/utilisateurs")
 		//cree un utilisateur
 		@PostMapping
 		@ResponseBody
 		public Utilisateur newUtilisateur(@RequestBody UtilisateurDto utilisateurDto) {
 			Utilisateur utilisateur = new Utilisateur();
+			
+			//TODO penser à faire une Enum pour les Roles
 		    Role role = new Role("manager");
 			
 			utilisateur.setNom(utilisateurDto.getNom());
@@ -45,14 +50,14 @@ public class UtilisateurController {
 			utilisateur.setPassword(utilisateurDto.getPassword());
 			utilisateur.setRole(role);
 			
-			return UtilisateurServiceImpl.newUtilisateur(utilisateur);
+			return utilisateurService.newUtilisateur(utilisateur);
 		}
 		
 		//teste la connexion
 		@PostMapping("/connexion")
 		@ResponseBody
 		public String getConnection(@RequestBody ConnectionDto connectionDto) {
-			return UtilisateurServiceImpl.getConnection(connectionDto.getLogin(), connectionDto.getPassword());
+			return utilisateurService.getConnection(connectionDto.getLogin(), connectionDto.getPassword());
 		}
 		
 }

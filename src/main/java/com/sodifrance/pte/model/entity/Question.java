@@ -1,7 +1,9 @@
 package com.sodifrance.pte.model.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -10,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -39,11 +42,14 @@ public class Question implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY)
 	Set<Reponse> reponses = new HashSet<>();
 	
-	@OneToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
 	Set<Langage> langages = new HashSet<>();
 	
-	@OneToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
 	Set<Niveau> niveaux = new HashSet<>();
+	
+	/*@ManyToMany(fetch = FetchType.LAZY)
+    List<Candidat> candidats = new ArrayList<Candidat>();*/
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "typequestion_id")
@@ -54,9 +60,10 @@ public class Question implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Question(@NotNull @Size(min = 2, max = 755) String libelle, @NotNull Boolean etat,
+	public Question(Long id, @NotNull @Size(min = 2, max = 755) String libelle, @NotNull Boolean etat,
 			Set<Reponse> reponses, Set<Langage> langages, Set<Niveau> niveaux, TypeQuestion typeQuestion) {
 		super();
+		this.id = id;
 		this.libelle = libelle;
 		this.etat = etat;
 		this.reponses = reponses;
@@ -64,5 +71,7 @@ public class Question implements Serializable {
 		this.niveaux = niveaux;
 		this.typeQuestion = typeQuestion;
 	}
+	
+	
 	
 }

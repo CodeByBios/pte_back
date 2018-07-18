@@ -1,9 +1,26 @@
 package com.sodifrance.pte.service;
 
+import java.util.List;
+import java.util.Optional;
+
+import com.sodifrance.pte.model.entity.Langage;
+import com.sodifrance.pte.model.entity.Niveau;
 import com.sodifrance.pte.model.entity.Question;
+import com.sodifrance.pte.model.entity.TypeQuestion;
 
 public interface QuestionService {
 
 	Question createQuestion(Question pQuestion);
+
+	Optional<Question> findQuestionById(Long id);
+
+	Question updateQuestion(Question pQuestion);
+
+	List<Question> getAllQuestion();
+
+	//List<Question> getAllQuestionByNiveauxAndLangagesAndTypeQuestion(Long pIdNiveau, Long pIdLangage,Long pIdTypeQuestion);
+
+	List<Question> getAllQuestionByNiveauxAndLangagesAndTypeQuestion(Niveau pNiveau, Langage pLangage,
+			TypeQuestion pTypeQuestion);
 
 }

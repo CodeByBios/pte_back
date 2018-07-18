@@ -8,6 +8,4 @@ public interface NiveauService {
 
 	Optional<Niveau> findNiveauById(Long id);
 
-	Niveau createNiveau(Niveau pNiveau);
-
 }

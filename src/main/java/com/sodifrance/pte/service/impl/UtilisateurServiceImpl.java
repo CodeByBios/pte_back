@@ -1,6 +1,7 @@
 package com.sodifrance.pte.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import com.sodifrance.pte.service.UtilisateurService;
 public class UtilisateurServiceImpl implements UtilisateurService{
 	
 	@Autowired
-	UtilisateurDao utilisateurDao;
+	private UtilisateurDao utilisateurDao;
 	
 	@Override
 	public List<Utilisateur> getAllUtilisateurs() {
@@ -22,31 +23,7 @@ public class UtilisateurServiceImpl implements UtilisateurService{
 	}
 
 	@Override
-	public List<Utilisateur> getUtilisateurs(Long[] id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Utilisateur getUtilisateur(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Utilisateur newUtilisateur(Utilisateur utilisateur) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Utilisateur deleteUtilisateur(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Utilisateur> findUtilisateurs(String nom) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -62,6 +39,11 @@ public class UtilisateurServiceImpl implements UtilisateurService{
 			}
 		}
 		return rep;
+	}
+	
+	@Override
+	public Optional<Utilisateur> finfUtilisateurById(Long pId){
+		return utilisateurDao.findById(pId);
 	}
 
 }

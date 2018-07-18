@@ -2,7 +2,6 @@ package com.sodifrance.pte.model.dto;
 
 import java.io.Serializable;
 
-import com.sodifrance.pte.model.entity.Langage;
 import com.sodifrance.pte.model.entity.Reponse;
 
 import lombok.Data;
@@ -12,6 +11,8 @@ public class ReponseDto implements Serializable {
 
 	
 	private static final long serialVersionUID = -5453615972966648985L;
+	
+	private Long id;
 	
 	private String libelle;
 	

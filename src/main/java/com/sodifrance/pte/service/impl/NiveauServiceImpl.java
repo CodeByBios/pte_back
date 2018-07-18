@@ -24,11 +24,4 @@ public class NiveauServiceImpl implements NiveauService {
 	public Optional<Niveau> findNiveauById(Long id) {
 		return niveauDao.findById(id);
 	}
-	
-	@Override
-	public Niveau createNiveau(Niveau pNiveau) {
-		return niveauDao.save(pNiveau);
-		
-	}
-
 }

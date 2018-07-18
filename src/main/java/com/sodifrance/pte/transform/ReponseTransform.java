@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Component;
 
 import com.sodifrance.pte.model.dto.ReponseDto;
 import com.sodifrance.pte.model.entity.Reponse;
 
+@Component
 public class ReponseTransform {
 	
 	
