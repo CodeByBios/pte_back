@@ -1,6 +1,7 @@
 package com.sodifrance.pte.ws;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/pte")
+@CrossOrigin
 public class QuestionController {
 	
 	private static final String PATH_CREER_QUESTION = "/v1/questions";
