@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sodifrance.pte.dao.QuestionDao;
+import com.sodifrance.pte.dao.ReponseDao;
 import com.sodifrance.pte.exceptions.PteParametersException;
 import com.sodifrance.pte.model.entity.Langage;
 import com.sodifrance.pte.model.entity.Niveau;
@@ -35,6 +36,9 @@ public class QuestionServiceImpl extends AbstractServiceImpl<Question> implement
 	@Autowired
 	private LangageService langageService;
 	
+	@Autowired
+	private ReponseDao reponseDao;
+	
 	@Override
 	protected JpaRepository<Question, Long> getEntityDao() {
 		return questionDao;
@@ -56,15 +60,19 @@ public class QuestionServiceImpl extends AbstractServiceImpl<Question> implement
 		
 		if(lQuestion != null) {
 			
-			lQuestion.setEtat(pQuestionUpdate.getEtat());
-			lQuestion.setLibelle(pQuestionUpdate.getLibelle());
-			lQuestion.setLangages(pQuestionUpdate.getLangages());
-			lQuestion.setNiveaux(pQuestionUpdate.getNiveaux());
-			lQuestion.setTypeQuestion(pQuestionUpdate.getTypeQuestion());
-			lQuestion.setReponses(pQuestionUpdate.getReponses());
-		}else {
-			throw new PteParametersException("La question n'esxiste pas");
-		}
+			if(pQuestionUpdate.getEtat() != null) {
+				if(lQuestion.getEtat().equals(Boolean.TRUE)) {
+					lQuestion.setEtat(pQuestionUpdate.getEtat());
+				}else {
+					lQuestion.setEtat(pQuestionUpdate.getEtat());
+					lQuestion.setLibelle(pQuestionUpdate.getLibelle());
+					lQuestion.setLangages(pQuestionUpdate.getLangages());
+					lQuestion.setNiveaux(pQuestionUpdate.getNiveaux());
+					lQuestion.setTypeQuestion(pQuestionUpdate.getTypeQuestion());
+					lQuestion.setReponses(pQuestionUpdate.getReponses());
+				}
+			}
+		}else throw new PteParametersException("La question n'esxiste pas");
 		
 		return lQuestion;
 	}
@@ -124,4 +132,17 @@ public class QuestionServiceImpl extends AbstractServiceImpl<Question> implement
 		}
 	}
 	
+	//TODO Vérifier que la question supprimer n'est pas encore utiliser par un candidat
+	@Override
+	public void deleteQuestion(Long pIdQuestion) {
+		Question lQuestion = findQuestionById(pIdQuestion).get();
+		if(lQuestion.getId() != null) {
+			if(lQuestion.getReponses() != null) {
+				lQuestion.getReponses().forEach(reponse ->{
+					reponseDao.delete(reponse);
+				});
+			}
+			questionDao.delete(lQuestion);
+		}
+	}
 }

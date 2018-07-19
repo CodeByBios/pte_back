@@ -2,10 +2,9 @@ package com.sodifrance.pte.model.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -39,7 +38,7 @@ public class Question implements Serializable {
 	@NotNull
 	Boolean etat;
 	
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	List<Reponse> reponses = new ArrayList<Reponse>();
 	
 	@ManyToMany(fetch = FetchType.LAZY)

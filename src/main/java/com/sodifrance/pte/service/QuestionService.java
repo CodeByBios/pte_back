@@ -22,4 +22,6 @@ public interface QuestionService {
 
 	List<Question> getAllQuestionsActives(Boolean actif);
 
+	void deleteQuestion(Long pIdQuestion);
+
 }
