@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -96,6 +98,16 @@ public class QuestionController {
         List<Question> lListQuestions = questionService.getAllQuestionsActives(actif);
         return questionTransform.listEntityToListDto(lListQuestions);
     }
-	
+    
+    /**
+     * Suppression d'une question
+     * @param pIdQuestion
+     * @return
+     */
+    @DeleteMapping(value = PATH_QUESTION + "/{pIdQuestion}")
+    public void deleteQuestion(@PathVariable Long pIdQuestion) throws Exception {
+        log.debug("Suppréssion d'une question : {}.", pIdQuestion);
+        questionService.deleteQuestion(pIdQuestion);
+    }
 
 }
