@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -90,8 +91,8 @@ public class QuestionController {
      * @return
      * @throws Exception
      */
-    @GetMapping(value = PATH_QUESTION)
-    public List<QuestionDto> getAllQuestions(Boolean actif) throws Exception {
+    @GetMapping(value = PATH_QUESTION + "/{actif}")
+    public List<QuestionDto> getAllQuestions(@PathVariable Boolean actif) throws Exception {
         log.debug("Récupération des outils.");
         List<Question> lListQuestions = questionService.getAllQuestionsActives(actif);
         return questionTransform.listEntityToListDto(lListQuestions);
