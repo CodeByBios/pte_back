@@ -2,11 +2,11 @@ package com.sodifrance.pte.service.impl;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.sodifrance.pte.dao.UtilisateurDao;
-import com.sodifrance.pte.model.dto.UtilisateurDto;
-import com.sodifrance.pte.model.entity.Role;
 import com.sodifrance.pte.model.entity.Utilisateur;
 import com.sodifrance.pte.service.UtilisateurService;
 
@@ -50,21 +50,6 @@ public class UtilisateurServiceImpl implements UtilisateurService{
 			}
 		}
 		return rep;
-	}
-	
-	@Override
-	public Utilisateur transformDtoToEntity(UtilisateurDto utilisateurDto){
-		Utilisateur utilisateur = new Utilisateur();
-		Role role = new Role("rh"); //utilisateurDto.getRoleId()
-		role.setId(utilisateurDto.getRoleId());
-
-		utilisateur.setNom(utilisateurDto.getNom());
-		utilisateur.setPrenom(utilisateurDto.getPrenom());
-		utilisateur.setLogin(utilisateurDto.getLogin());
-		utilisateur.setPassword(utilisateurDto.getPassword());
-		utilisateur.setRole(role);
-		
-		return utilisateur;
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import javax.annotation.PostConstruct;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.sodifrance.pte.model.dto.CandidatDto;
@@ -15,6 +16,9 @@ import com.sodifrance.pte.model.entity.Utilisateur;
  */
 @Component
 public class UtilisateurTransform {
+	
+	@Autowired
+	private RoleTransform roleTransform;
 	
 	 @PostConstruct
 	    public void init() {
@@ -40,8 +44,8 @@ public class UtilisateurTransform {
 		public Utilisateur convertToEntity(UtilisateurDto pUtilisateurDto) {
 			ModelMapper modelMapper = new ModelMapper();
 			Utilisateur lUtilisateur = modelMapper.map(pUtilisateurDto, Utilisateur.class);
-			
-			//TODO Role à gérer
+			//Transfom du Role
+			lUtilisateur.setRole(roleTransform.convertToEntity(pUtilisateurDto.getRoleDto()));
 			
 			return lUtilisateur;
 		}
@@ -56,8 +60,8 @@ public class UtilisateurTransform {
 		public UtilisateurDto convertToDto(Utilisateur pUtilisateur) {
 			ModelMapper modelMapper = new ModelMapper();
 			UtilisateurDto lUtilisateurDto = modelMapper.map(pUtilisateur, UtilisateurDto.class);
-			
-			//TODO Role à gérer
+			//Transfom du Role
+			lUtilisateurDto.setRoleDto(roleTransform.convertToDto(pUtilisateur.getRole()));
 			
 			return lUtilisateurDto;
 		}

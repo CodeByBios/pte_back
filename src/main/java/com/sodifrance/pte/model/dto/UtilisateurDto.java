@@ -17,20 +17,20 @@ public class UtilisateurDto {
 	
 	String password;
 	
-	Long roleId;
-
-	public UtilisateurDto(String nom, String prenom, String login, String password, Long roleId, Long id) {
-		super();
-		this.nom = nom;
-		this.prenom = prenom;
-		this.login = login;
-		this.password = password;
-		this.roleId = roleId;
-		this.id = id;
-	}
+	private RoleDto roleDto;
 
 	public UtilisateurDto() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public UtilisateurDto(Long id, String nom, String prenom, String login, String password, RoleDto roleDto) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.login = login;
+		this.password = password;
+		this.roleDto = roleDto;
 	}
 }
