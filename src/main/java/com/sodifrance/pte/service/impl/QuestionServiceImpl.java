@@ -2,6 +2,7 @@ package com.sodifrance.pte.service.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -104,13 +105,24 @@ public class QuestionServiceImpl extends AbstractServiceImpl<Question> implement
 	}
 	
 	@Override
-	public List<Question> getAllQuestion(){
+	public List<Question> getAllQuestions(){
 		return questionDao.findAll();
 	}
 	
 	@Override
 	public List<Question> getAllQuestionByNiveauxAndLangagesAndTypeQuestion(Niveau pNiveau, Langage pLangage, TypeQuestion pTypeQuestion){
 		return questionDao.findByNiveauxAndLangagesAndTypeQuestion(pNiveau, pLangage, pTypeQuestion);
+	}
+	
+	@Override
+	public List<Question> getAllQuestionsActives(Boolean actif){
+		List<Question> lListQuestions = this.getAllQuestions();
+		if(actif == null) {
+		log.debug("Il n'existe pas de questions actives : {}.", lListQuestions);
+			return lListQuestions;
+		}else {
+			return lListQuestions.stream().filter(quest -> actif ? quest.getEtat() : !quest.getEtat().equals(Boolean.TRUE)).collect(Collectors.toList());
+		}
 	}
 	
 }

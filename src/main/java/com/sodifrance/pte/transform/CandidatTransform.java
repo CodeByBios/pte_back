@@ -1,7 +1,5 @@
 package com.sodifrance.pte.transform;
 
-import java.time.LocalDateTime;
-
 import javax.annotation.PostConstruct;
 
 import org.modelmapper.ModelMapper;
@@ -49,7 +47,6 @@ public class CandidatTransform {
 		ModelMapper modelMapper = new ModelMapper();
 		
 		Candidat lCandidat = modelMapper.map(pCandidatDto, Candidat.class);
-		lCandidat.setDate(LocalDateTime.now());
 		lCandidat.setUtlisateur(utilisateurTransform.convertToEntity(pCandidatDto.getUtlisateurDto()));
 		lCandidat.setQuestions(questionTransform.convertToListEntity(pCandidatDto.getQuestionDto()));
 
@@ -57,9 +54,31 @@ public class CandidatTransform {
 	}
 	
 	/**
+	 * Converti un dto en entité
+	 *
+	 * @param pCandidatDto
+	 *            objet à convertir en entité
+	 * @return un Candidat
+	 */
+	public Candidat convertWithoutQuestionsToEntity(CandidatDto pCandidatDto) {
+		ModelMapper modelMapper = new ModelMapper();
+		
+		//Candidat lCandidat = modelMapper.map(pCandidatDto, Candidat.class);
+		Candidat lCandidat = new Candidat();
+		lCandidat.setDate(pCandidatDto.getDate());
+		lCandidat.setNom(pCandidatDto.getNom());
+		lCandidat.setPrenom(pCandidatDto.getPrenom());
+		lCandidat.setTemps(pCandidatDto.getTemps());
+		lCandidat.setUtlisateur(utilisateurTransform.convertToEntity(pCandidatDto.getUtlisateurDto()));
+		//lCandidat.setQuestions(questionTransform.convertToListEntity(pCandidatDto.getQuestionDto()));
+
+		return lCandidat;
+	}
+	
+	/**
 	 * Converti une entité en dto
 	 *
-	 * @param user
+	 * @param pCandidat
 	 *            l'entité à convertir
 	 * @return le dto correspondant
 	 */
@@ -70,6 +89,29 @@ public class CandidatTransform {
 		CandidatDto lCandidatDto = modelMapper.map(pCandidat, CandidatDto.class);
 		lCandidatDto.setUtlisateurDto(utilisateurTransform.convertToDto(pCandidat.getUtlisateur()));
 		lCandidatDto.setQuestionDto(questionTransform.listEntityToListDto(pCandidat.getQuestions())); 
+		
+		return lCandidatDto;
+	}
+	
+	/**
+	 * Converti une entité en dto
+	 *
+	 * @param pCandidat
+	 *            l'entité à convertir sans les questions
+	 * @return le dto correspondant
+	 */
+	public CandidatDto convertWithoutQuestionsToDto(Candidat pCandidat) {
+		
+		ModelMapper modelMapper = new ModelMapper();
+		
+		//CandidatDto lCandidatDto = modelMapper.map(pCandidat, CandidatDto.class);
+		CandidatDto lCandidatDto = new CandidatDto();
+		lCandidatDto.setDate(pCandidat.getDate());
+		lCandidatDto.setNom(pCandidat.getNom());
+		lCandidatDto.setPrenom(pCandidat.getPrenom());
+		lCandidatDto.setTemps(pCandidat.getTemps());
+		lCandidatDto.setUtlisateurDto(utilisateurTransform.convertToDto(pCandidat.getUtlisateur()));
+		//lCandidatDto.setQuestionDto(questionTransform.listEntityToListDto(pCandidat.getQuestions())); 
 		
 		return lCandidatDto;
 	}

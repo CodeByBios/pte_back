@@ -19,7 +19,6 @@ import com.sodifrance.pte.model.dto.QuestionDto;
 import com.sodifrance.pte.model.dto.TypeQuestionDto;
 import com.sodifrance.pte.model.entity.Candidat;
 import com.sodifrance.pte.model.entity.Question;
-import com.sodifrance.pte.service.CandidatService;
 import com.sodifrance.pte.service.TestService;
 import com.sodifrance.pte.transform.CandidatTransform;
 import com.sodifrance.pte.transform.LangageTransform;
@@ -82,22 +81,6 @@ public class TestController {
 		return PteCollectionUtils.transformCollectionToList(testService.getListTypesQuestions(), typeQuestion -> typeQuestionTransform.convertToDto(typeQuestion));
 	}
 
-	
-	/**
-     * Execute les validateurs sur le dto.<br>
-     * Converti le dto en Entity.
-     *
-     * @param pCandidatDto la question dto
-     * @return la Candidat entity
-     */
-    Candidat validateAndTransform(CandidatDto pCandidatDto) {
-        // Validation du DTO
-        DtoValidator.validateDto(pCandidatDto);
-
-        // Conversion du DTO en Entity
-        return candidatTransform.convertToEntity(pCandidatDto);
-    }
-    
 	/**
      * Execute les validateurs sur le dto.<br>
      * Converti le dto en Entity.
@@ -113,19 +96,13 @@ public class TestController {
         return questionTransform.convertToEntity(pQuestionDto);
     }
     
-    
-	@PostMapping(value = PATH_TEST_CREER + "/{idNiveau}" + "/{idLangage}"+ "/{idTypeQuestion}")
-	public List<QuestionDto> createTest(@PathVariable Long idNiveau, @PathVariable Long idLangage, @PathVariable Long idTypeQuestion, @RequestBody CandidatDto pCandidatDto) throws Exception {
-		log.debug("Creation d'un Test : {}.", pCandidatDto);
+	@PostMapping(value = PATH_TEST_CREER + "/{idNiveau}" + "/{idLangage}" + "/{idTypeQuestion}" + "/{idCandidat}")
+	public List<QuestionDto> createTest(@PathVariable Long idNiveau, @PathVariable Long idLangage, @PathVariable Long idTypeQuestion, @PathVariable Long idCandidat) throws Exception {
+		log.debug("Creation d'un Test : de niveau {} du Langage {} du type de question {} et du candidat {}.", idNiveau, idLangage, idTypeQuestion, idCandidat);
 
-		Candidat lCandidat = validateAndTransform(pCandidatDto);
-		
-		//Creation du candidat et du Test
-		List<Question> lListQuestions = testService.createTest(idNiveau, idLangage, idTypeQuestion, lCandidat);
-		candidatTransform.convertToDto(lCandidat);
-		//testTransform.convertListEntityToListDto(lListQuestion, lCandidat);
+		//Creation du Test
+		List<Question> lListQuestions = testService.createTest(idNiveau, idLangage, idTypeQuestion, idCandidat);
 		
 		return PteCollectionUtils.transformCollectionToList(lListQuestions, question -> questionTransform.convertToDto(question));
-
 	}
 }
