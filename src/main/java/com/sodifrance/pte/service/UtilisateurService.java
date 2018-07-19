@@ -21,7 +21,5 @@ public interface UtilisateurService {
 	
 	public String getConnection(String login, String password);
 	
-	public Utilisateur transformDtoToEntity(UtilisateurDto utilisateurDto);
-
 	Optional<Utilisateur> finfUtilisateurById(Long pId);
 }

@@ -16,6 +16,7 @@ import com.sodifrance.pte.model.dto.ConnectionDto;
 import com.sodifrance.pte.model.dto.UtilisateurDto;
 import com.sodifrance.pte.model.entity.Utilisateur;
 import com.sodifrance.pte.service.UtilisateurService;
+import com.sodifrance.pte.transform.UtilisateurTransform;
 
 @RestController
 @RequestMapping("pte/utilisateurs")
@@ -24,6 +25,9 @@ public class UtilisateurController {
 
 	@Autowired
 	UtilisateurService UtilisateurServiceImpl;
+	
+	@Autowired
+	private UtilisateurTransform utilisateurTransform;
 
 	// retourne tout les utilisateurs
 	@GetMapping
@@ -47,7 +51,7 @@ public class UtilisateurController {
 	@PostMapping
 	@ResponseBody
 	public Utilisateur newUtilisateur(@RequestBody UtilisateurDto utilisateurDto) {
-		Utilisateur utilisateur = UtilisateurServiceImpl.transformDtoToEntity(utilisateurDto);
+		Utilisateur utilisateur = utilisateurTransform.convertToEntity(utilisateurDto);
 		return UtilisateurServiceImpl.newUtilisateur(utilisateur);
 	}
 
