@@ -47,7 +47,7 @@ public class CandidatTransform {
 		ModelMapper modelMapper = new ModelMapper();
 		
 		Candidat lCandidat = modelMapper.map(pCandidatDto, Candidat.class);
-		lCandidat.setUtlisateur(utilisateurTransform.convertToEntity(pCandidatDto.getUtlisateurDto()));
+		lCandidat.setUtlisateur(utilisateurTransform.convertToEntity(pCandidatDto.getUtilisateurDto()));
 		lCandidat.setQuestions(questionTransform.convertToListEntity(pCandidatDto.getQuestionDto()));
 
 		return lCandidat;
@@ -69,7 +69,7 @@ public class CandidatTransform {
 		lCandidat.setNom(pCandidatDto.getNom());
 		lCandidat.setPrenom(pCandidatDto.getPrenom());
 		lCandidat.setTemps(pCandidatDto.getTemps());
-		lCandidat.setUtlisateur(utilisateurTransform.convertToEntity(pCandidatDto.getUtlisateurDto()));
+		lCandidat.setUtlisateur(utilisateurTransform.convertToEntity(pCandidatDto.getUtilisateurDto()));
 		//lCandidat.setQuestions(questionTransform.convertToListEntity(pCandidatDto.getQuestionDto()));
 
 		return lCandidat;
@@ -87,7 +87,7 @@ public class CandidatTransform {
 		ModelMapper modelMapper = new ModelMapper();
 		
 		CandidatDto lCandidatDto = modelMapper.map(pCandidat, CandidatDto.class);
-		lCandidatDto.setUtlisateurDto(utilisateurTransform.convertToDto(pCandidat.getUtlisateur()));
+		lCandidatDto.setUtilisateurDto(utilisateurTransform.convertToDto(pCandidat.getUtlisateur()));
 		lCandidatDto.setQuestionDto(questionTransform.listEntityToListDto(pCandidat.getQuestions())); 
 		
 		return lCandidatDto;
@@ -106,11 +106,12 @@ public class CandidatTransform {
 		
 		//CandidatDto lCandidatDto = modelMapper.map(pCandidat, CandidatDto.class);
 		CandidatDto lCandidatDto = new CandidatDto();
+		lCandidatDto.setId(pCandidat.getId());
 		lCandidatDto.setDate(pCandidat.getDate());
 		lCandidatDto.setNom(pCandidat.getNom());
 		lCandidatDto.setPrenom(pCandidat.getPrenom());
 		lCandidatDto.setTemps(pCandidat.getTemps());
-		lCandidatDto.setUtlisateurDto(utilisateurTransform.convertToDto(pCandidat.getUtlisateur()));
+		lCandidatDto.setUtilisateurDto(utilisateurTransform.convertToDto(pCandidat.getUtlisateur()));
 		//lCandidatDto.setQuestionDto(questionTransform.listEntityToListDto(pCandidat.getQuestions())); 
 		
 		return lCandidatDto;

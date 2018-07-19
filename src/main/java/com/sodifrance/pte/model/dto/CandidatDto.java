@@ -29,6 +29,6 @@ public class CandidatDto {
 	
 	private List<QuestionDto> questionDto;
 	
-	private UtilisateurDto utlisateurDto;
+	private UtilisateurDto utilisateurDto;
 
 }

@@ -74,7 +74,7 @@ public class CreateTestServiceImpl implements TestService {
 			Random lRandomQuestion = new Random();
 
 			//TODO vérifier bien que le random n'a pas de doublonts
-			lListQuestionsRandom = lRandomQuestion.ints(1, 0, lListQuestions.size()).mapToObj(i -> lListQuestions.get(i)).collect(Collectors.toList());
+			lListQuestionsRandom = lRandomQuestion.ints(3, 0, lListQuestions.size()).mapToObj(i -> lListQuestions.get(i)).collect(Collectors.toList());
 			
 			Optional<Candidat> lCandidat = candidatService.findCandidatById(pIdCandidat);
 			if(lCandidat.isPresent()) {
