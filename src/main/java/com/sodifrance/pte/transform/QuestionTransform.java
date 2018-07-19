@@ -1,5 +1,6 @@
 package com.sodifrance.pte.transform;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -9,7 +10,6 @@ import javax.annotation.PostConstruct;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -18,13 +18,11 @@ import com.sodifrance.pte.model.dto.LangageDto;
 import com.sodifrance.pte.model.dto.NiveauDto;
 import com.sodifrance.pte.model.dto.QuestionDto;
 import com.sodifrance.pte.model.dto.ReponseDto;
-import com.sodifrance.pte.model.dto.UtilisateurDto;
 import com.sodifrance.pte.model.entity.Langage;
 import com.sodifrance.pte.model.entity.Niveau;
 import com.sodifrance.pte.model.entity.Question;
 import com.sodifrance.pte.model.entity.Reponse;
 import com.sodifrance.pte.model.entity.TypeQuestion;
-import com.sodifrance.pte.model.entity.Utilisateur;
 import com.sodifrance.pte.service.LangageService;
 import com.sodifrance.pte.service.NiveauService;
 import com.sodifrance.pte.service.ReponseService;
@@ -59,6 +57,9 @@ public class QuestionTransform {
 	
 	@Autowired
 	private LangageTransform langageTransform;
+	
+	@Autowired
+	private ReponseTransform reponseTransform;
 	
 	/*@Autowired
 	private ModelMapper modelMapper;*/
@@ -104,9 +105,9 @@ public class QuestionTransform {
 			lTypeQuestion.setLibelle(pQuestionDto.getTypeQuestionDto().getLibelle());
 			lQuestion.setTypeQuestion(lTypeQuestion);
 			
-			Set<Langage> lLangages = new HashSet<Langage>();
-			Set<Reponse> lReponses = new HashSet<Reponse>();
-			Set<Niveau> lNiveaux = new HashSet<Niveau>();
+			List<Langage> lLangages = new ArrayList<Langage>();
+			List<Reponse> lReponses = new ArrayList<Reponse>();
+			List<Niveau> lNiveaux = new ArrayList<Niveau>();
 			
 			//pQuestionDto.setLangageDto(langageTransform.convertListEntityToListDto(lQuestion.getLangages()));
 			
@@ -179,13 +180,18 @@ public class QuestionTransform {
 	 */
 	public QuestionDto convertToDto(Question pQuestion) {
 		
-		//QuestionDto lQuestionDto = modelMapper.map(pQuestion, QuestionDto.class);
+		ModelMapper modelMapper = new ModelMapper();
 		
-		QuestionDto lQuestionDto = new QuestionDto();
+		QuestionDto lQuestionDto = modelMapper.map(pQuestion, QuestionDto.class);
+		
+		//QuestionDto lQuestionDto = new QuestionDto();
 
 		lQuestionDto.setTypeQuestionDto(typeQuestionTransform.convertToDto(pQuestion.getTypeQuestion()));
+		lQuestionDto.setNiveauDto(niveauTransform.convertListEntityToListDto(pQuestion.getNiveaux()));
+		lQuestionDto.setLangageDto(langageTransform.convertListEntityToListDto(pQuestion.getLangages()));
+		lQuestionDto.setReponseDto(reponseTransform.convertListEntityToListDto(pQuestion.getReponses()));
 
-		if (!CollectionUtils.isEmpty(lQuestionDto.getNiveauDto())) {
+		/*if (!CollectionUtils.isEmpty(lQuestionDto.getNiveauDto())) {
 			lQuestionDto.setNiveauDto(pQuestion.getNiveaux().stream().map(NiveauDto::new).collect(Collectors.toSet()));
 		}
 		if (!CollectionUtils.isEmpty(lQuestionDto.getLangageDto())) {
@@ -193,7 +199,7 @@ public class QuestionTransform {
 		}
 		if (!CollectionUtils.isEmpty(lQuestionDto.getReponseDto())) {
 			lQuestionDto.setReponseDto(pQuestion.getReponses().stream().map(ReponseDto::new).collect(Collectors.toSet()));
-		}
+		}*/
 
 		return lQuestionDto;
 	}

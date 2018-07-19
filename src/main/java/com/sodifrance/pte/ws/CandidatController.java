@@ -56,14 +56,14 @@ public class CandidatController {
      * @return
      * @throws Exception
      */
-	@PostMapping(value = PATH_CANDIDAT + "/{idUtilisateur}")
-	public CandidatDto createCandidat(@PathVariable Long idUtilisateur, @RequestBody CandidatDto pCandidatDto) throws Exception {
+	@PostMapping(value = PATH_CANDIDAT)
+	public CandidatDto createCandidat(@RequestBody CandidatDto pCandidatDto) throws Exception {
 		log.debug("Creation du candidat : {}.", pCandidatDto);
 
 		//Candidat lCandidat = validateAndTransform(pCandidatDto);
 		Candidat lCandidat = candidatTransform.convertWithoutQuestionsToEntity(pCandidatDto);
 		//Creation du candidat
-		lCandidat = candidatService.createCandidtat(idUtilisateur, lCandidat);
+		lCandidat = candidatService.createCandidtat(lCandidat.getUtlisateur().getId(), lCandidat);
 		
 		return candidatTransform.convertWithoutQuestionsToDto(lCandidat);
 	}

@@ -1,7 +1,9 @@
 package com.sodifrance.pte.model.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -38,13 +40,13 @@ public class Question implements Serializable {
 	Boolean etat;
 	
 	@OneToMany(fetch = FetchType.LAZY)
-	Set<Reponse> reponses = new HashSet<>();
+	List<Reponse> reponses = new ArrayList<Reponse>();
 	
 	@ManyToMany(fetch = FetchType.LAZY)
-	Set<Langage> langages = new HashSet<>();
+	List<Langage> langages = new ArrayList<Langage>();
 	
 	@ManyToMany(fetch = FetchType.LAZY)
-	Set<Niveau> niveaux = new HashSet<>();
+	List<Niveau> niveaux = new ArrayList<Niveau>();
 	
 	/*@ManyToMany(fetch = FetchType.LAZY)
     List<Candidat> candidats = new ArrayList<Candidat>();*/
@@ -59,7 +61,7 @@ public class Question implements Serializable {
 	}
 
 	public Question(Long id, @NotNull @Size(min = 2, max = 755) String libelle, @NotNull Boolean etat,
-			Set<Reponse> reponses, Set<Langage> langages, Set<Niveau> niveaux, TypeQuestion typeQuestion) {
+			List<Reponse> reponses, List<Langage> langages, List<Niveau> niveaux, TypeQuestion typeQuestion) {
 		super();
 		this.id = id;
 		this.libelle = libelle;

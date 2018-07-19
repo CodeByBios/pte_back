@@ -1,6 +1,7 @@
 package com.sodifrance.pte.model.dto;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 import lombok.Data;
@@ -16,12 +17,12 @@ public class QuestionDto implements Serializable {
 	
 	private Boolean etat = Boolean.TRUE;
 	
-	private Set<LangageDto> langageDto;
+	private List<LangageDto> langageDto;
 	
-	private Set<NiveauDto> niveauDto;
+	private List<NiveauDto> niveauDto;
 	
 	private TypeQuestionDto typeQuestionDto;
 	
-	private Set<ReponseDto> ReponseDto;
+	private List<ReponseDto> ReponseDto;
 	
 }
