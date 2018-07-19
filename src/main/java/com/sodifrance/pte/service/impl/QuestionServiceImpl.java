@@ -118,10 +118,9 @@ public class QuestionServiceImpl extends AbstractServiceImpl<Question> implement
 	public List<Question> getAllQuestionsActives(Boolean actif){
 		List<Question> lListQuestions = this.getAllQuestions();
 		if(actif == null) {
-		log.debug("Il n'existe pas de questions actives : {}.", lListQuestions);
 			return lListQuestions;
 		}else {
-			return lListQuestions.stream().filter(quest -> actif ? quest.getEtat() : !quest.getEtat().equals(Boolean.TRUE)).collect(Collectors.toList());
+			return lListQuestions.stream().filter(quest -> actif ? quest.getEtat() : !quest.getEtat()).collect(Collectors.toList());
 		}
 	}
 	

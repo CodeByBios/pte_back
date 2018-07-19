@@ -1,7 +1,10 @@
 package com.sodifrance.pte.ws;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @CrossOrigin
 public class QuestionController {
 	
-	private static final String PATH_CREER_QUESTION = "/v1/questions";
+	private static final String PATH_QUESTION = "/v1/questions";
 	
 	@Autowired
 	private QuestionService questionService;
@@ -52,7 +55,7 @@ public class QuestionController {
      * @return
      * @throws Exception
      */
-	@PostMapping(value = PATH_CREER_QUESTION)
+	@PostMapping(value = PATH_QUESTION)
 	public QuestionDto createQuestion(@RequestBody QuestionDto pQuestionDto) throws Exception {
 		log.debug("Creation d'une question : {}.", pQuestionDto);
 		
@@ -69,7 +72,7 @@ public class QuestionController {
 	 * @return
 	 * @throws PteParametersException
 	 */
-	@PutMapping(value = PATH_CREER_QUESTION)
+	@PutMapping(value = PATH_QUESTION)
 	public QuestionDto updateQuestion(@RequestBody QuestionDto pQuestionDto) throws PteParametersException{
 		log.debug("Modification de la question et des réponses : {} ", pQuestionDto);
 		
@@ -81,5 +84,18 @@ public class QuestionController {
 		QuestionDto lQuestionDto = questionTransform.convertToDto(lQuestion);
 		return lQuestionDto;
 	}
+	
+    /**
+     * Récupération de toutes les Questions
+     * @return
+     * @throws Exception
+     */
+    @GetMapping(value = PATH_QUESTION)
+    public List<QuestionDto> getAllQuestions(Boolean actif) throws Exception {
+        log.debug("Récupération des outils.");
+        List<Question> lListQuestions = questionService.getAllQuestionsActives(actif);
+        return questionTransform.listEntityToListDto(lListQuestions);
+    }
+	
 
 }

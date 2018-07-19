@@ -1,9 +1,7 @@
 package com.sodifrance.pte.transform;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
@@ -12,12 +10,8 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
-import com.sodifrance.pte.model.dto.LangageDto;
-import com.sodifrance.pte.model.dto.NiveauDto;
 import com.sodifrance.pte.model.dto.QuestionDto;
-import com.sodifrance.pte.model.dto.ReponseDto;
 import com.sodifrance.pte.model.entity.Langage;
 import com.sodifrance.pte.model.entity.Niveau;
 import com.sodifrance.pte.model.entity.Question;
@@ -191,7 +185,7 @@ public class QuestionTransform {
 		lQuestionDto.setLangageDto(langageTransform.convertListEntityToListDto(pQuestion.getLangages()));
 		lQuestionDto.setReponseDto(reponseTransform.convertListEntityToListDto(pQuestion.getReponses()));
 
-		/*if (!CollectionUtils.isEmpty(lQuestionDto.getNiveauDto())) {
+		/*if (!CollectionUtils.isEmpty(lQuestionDto.getNiveauDto())) {o
 			lQuestionDto.setNiveauDto(pQuestion.getNiveaux().stream().map(NiveauDto::new).collect(Collectors.toSet()));
 		}
 		if (!CollectionUtils.isEmpty(lQuestionDto.getLangageDto())) {
