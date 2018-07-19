@@ -37,6 +37,12 @@ public class UtilisateurController {
 		return UtilisateurServiceImpl.getUtilisateurByLogin(login);
 	}
 
+	// retourne un utilisateur
+	@GetMapping("user/{id}")
+	public Utilisateur getUtilisateurById(@PathVariable Long id) {
+		return UtilisateurServiceImpl.getUtilisateur(id).get();
+	}
+
 	// cree un utilisateur
 	@PostMapping
 	@ResponseBody
@@ -51,5 +57,5 @@ public class UtilisateurController {
 	public String getConnection(@RequestBody ConnectionDto connectionDto) {
 		return UtilisateurServiceImpl.getConnection(connectionDto.getLogin(), connectionDto.getPassword());
 	}
-	
+
 }
