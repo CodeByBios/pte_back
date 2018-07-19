@@ -56,15 +56,19 @@ public class QuestionServiceImpl extends AbstractServiceImpl<Question> implement
 		
 		if(lQuestion != null) {
 			
-			lQuestion.setEtat(pQuestionUpdate.getEtat());
-			lQuestion.setLibelle(pQuestionUpdate.getLibelle());
-			lQuestion.setLangages(pQuestionUpdate.getLangages());
-			lQuestion.setNiveaux(pQuestionUpdate.getNiveaux());
-			lQuestion.setTypeQuestion(pQuestionUpdate.getTypeQuestion());
-			lQuestion.setReponses(pQuestionUpdate.getReponses());
-		}else {
-			throw new PteParametersException("La question n'esxiste pas");
-		}
+			if(pQuestionUpdate.getEtat() != null) {
+				if(lQuestion.getEtat().equals(Boolean.TRUE)) {
+					lQuestion.setEtat(pQuestionUpdate.getEtat());
+				}else {
+					lQuestion.setEtat(pQuestionUpdate.getEtat());
+					lQuestion.setLibelle(pQuestionUpdate.getLibelle());
+					lQuestion.setLangages(pQuestionUpdate.getLangages());
+					lQuestion.setNiveaux(pQuestionUpdate.getNiveaux());
+					lQuestion.setTypeQuestion(pQuestionUpdate.getTypeQuestion());
+					lQuestion.setReponses(pQuestionUpdate.getReponses());
+				}
+			}
+		}else throw new PteParametersException("La question n'esxiste pas");
 		
 		return lQuestion;
 	}
@@ -123,5 +127,4 @@ public class QuestionServiceImpl extends AbstractServiceImpl<Question> implement
 			return lListQuestions.stream().filter(quest -> actif ? quest.getEtat() : !quest.getEtat()).collect(Collectors.toList());
 		}
 	}
-	
 }
