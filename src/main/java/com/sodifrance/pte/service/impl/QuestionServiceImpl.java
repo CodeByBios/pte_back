@@ -1,5 +1,6 @@
 package com.sodifrance.pte.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -9,9 +10,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sodifrance.pte.dao.CandidatDao;
 import com.sodifrance.pte.dao.QuestionDao;
 import com.sodifrance.pte.dao.ReponseDao;
 import com.sodifrance.pte.exceptions.PteParametersException;
+import com.sodifrance.pte.model.entity.Candidat;
 import com.sodifrance.pte.model.entity.Langage;
 import com.sodifrance.pte.model.entity.Niveau;
 import com.sodifrance.pte.model.entity.Question;
@@ -38,6 +41,9 @@ public class QuestionServiceImpl extends AbstractServiceImpl<Question> implement
 	
 	@Autowired
 	private ReponseDao reponseDao;
+	
+	@Autowired
+	private CandidatDao candidatDao;
 	
 	@Override
 	protected JpaRepository<Question, Long> getEntityDao() {
@@ -132,17 +138,35 @@ public class QuestionServiceImpl extends AbstractServiceImpl<Question> implement
 		}
 	}
 	
-	//TODO Vérifier que la question supprimer n'est pas encore utiliser par un candidat
+
+	/**
+	 * Suppression d'une question non utilisée par un candidat
+	 * @param pQuestion
+	 * @return 
+	 */
 	@Override
 	public void deleteQuestion(Long pIdQuestion) {
 		Question lQuestion = findQuestionById(pIdQuestion).get();
 		if(lQuestion.getId() != null) {
-			if(lQuestion.getReponses() != null) {
-				lQuestion.getReponses().forEach(reponse ->{
-					reponseDao.delete(reponse);
-				});
-			}
-			questionDao.delete(lQuestion);
+			List<Candidat> lListCandidat = candidatDao.findAll();
+			List<Question> lListQuestionCandidat = new ArrayList<Question>();
+			
+			lListCandidat.forEach(candit ->{
+				lListQuestionCandidat.addAll(candit.getQuestions());
+			});
+			
+			lListQuestionCandidat.forEach(questCandit -> {
+				if(!questCandit.getId().equals(lQuestion.getId())) {
+					if(lQuestion.getReponses() != null) {
+						lQuestion.getReponses().forEach(reponse ->{
+							reponseDao.delete(reponse);
+						});
+					}
+					questionDao.delete(lQuestion);
+				}else {
+					throw new PteParametersException("Cette Question ne peut être supprimer");
+				}
+			});
 		}
 	}
 

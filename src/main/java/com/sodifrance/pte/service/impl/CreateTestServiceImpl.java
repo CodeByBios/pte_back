@@ -1,18 +1,22 @@
 package com.sodifrance.pte.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.Sets;
 import com.sodifrance.pte.dao.LangageDao;
 import com.sodifrance.pte.dao.NiveauDao;
 import com.sodifrance.pte.dao.TypeQuestionDao;
+import com.sodifrance.pte.exceptions.PteParametersException;
 import com.sodifrance.pte.model.entity.Candidat;
 import com.sodifrance.pte.model.entity.Langage;
 import com.sodifrance.pte.model.entity.Niveau;
@@ -66,28 +70,38 @@ public class CreateTestServiceImpl implements TestService {
 		
 		List<Question> lListQuestions = questionService.getAllQuestionByNiveauxAndLangagesAndTypeQuestion(niveauDao.findById(pIdNiveau).get(), langageDao.findById(pIdLangage).get(), typeQuestionDao.findById(pIdTypeQuestion).get());
 		
-		List<Question> lListQuestionsRandom = new ArrayList<Question>();
+		List<Question> lListQuestionsActives = lListQuestions.stream().filter(questActif -> questActif.getEtat().equals(Boolean.TRUE)).collect(Collectors.toList());
 		
-		//TODO rajouter des contraintes sur 20 question
+		Set<Question> lListQuestionsRandomSansDoublons = new HashSet<Question>();
+		
+		List<Question> lConvertSetToListQuestion = new ArrayList<>(lListQuestionsRandomSansDoublons);
+		
 		if(lListQuestions!=null) {
-			
+			//TODO modifier pour 20 questions
+			int lNombreMaxQuestions = 5;
 			Random lRandomQuestion = new Random();
 
 			//TODO vérifier bien que le random n'a pas de doublonts
-			lListQuestionsRandom = lRandomQuestion.ints(3, 0, lListQuestions.size()).mapToObj(i -> lListQuestions.get(i)).collect(Collectors.toList());
-			
-			Optional<Candidat> lCandidat = candidatService.findCandidatById(pIdCandidat);
-			if(lCandidat.isPresent()) {
-				//Mise à jour des question dans candidat
-				lCandidat.get().setQuestions(lListQuestionsRandom);
-				candidatService.updateCandidat(lCandidat.get());
-			}else log.debug("Le candidat n'exixte pas");
-			
+			lListQuestionsRandomSansDoublons = lRandomQuestion.ints(lNombreMaxQuestions, 0, lListQuestionsActives.size()).mapToObj(i -> lListQuestionsActives.get(i)).collect(Collectors.toSet());
+
+			if(lListQuestionsRandomSansDoublons != null && lListQuestionsRandomSansDoublons.size()==lNombreMaxQuestions) {
+				Optional<Candidat> lCandidat = candidatService.findCandidatById(pIdCandidat);
+				if(lCandidat.isPresent()) {
+					//Mise à jour des question dans candidat
+					lConvertSetToListQuestion.addAll(lListQuestionsRandomSansDoublons);
+					lCandidat.get().setQuestions(lConvertSetToListQuestion);
+					candidatService.updateCandidat(lCandidat.get());
+				}else {
+					throw new PteParametersException("Le candidat n'exixte pas");
+				}
+			}else {
+				throw new PteParametersException("Le nombre de question pour passer ce test n'est pas suffisant soit :" + lNombreMaxQuestions+ "." + "Il est égal à :" + lListQuestionsRandomSansDoublons.size());
+			}
 		}else {
-			log.debug("Aucune Question n'exixte");
+			throw new PteParametersException("Aucune Question n'exixte");
 		}
 		
-		return lListQuestionsRandom;
+		return lConvertSetToListQuestion;
 		
 	}
 }
