@@ -145,4 +145,10 @@ public class QuestionServiceImpl extends AbstractServiceImpl<Question> implement
 			questionDao.delete(lQuestion);
 		}
 	}
+
+	@Override
+	public List<Question> getAllQuestionsByNiveau(Niveau pNiveau) {
+		//return questionDao.findAndGroupBy(pNiveau);
+		return null;
+	}
 }

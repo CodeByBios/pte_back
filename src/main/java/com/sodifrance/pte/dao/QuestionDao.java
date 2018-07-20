@@ -14,5 +14,7 @@ import com.sodifrance.pte.model.entity.TypeQuestion;
 public interface QuestionDao extends JpaRepository<Question, Long> {
 
 	List<Question> findByNiveauxAndLangagesAndTypeQuestion(Niveau pNiveau, Langage pLangage, TypeQuestion pTypeQuestion);
+	
+	//List<Question> findAndGroupBy(Niveau pNiveau);
 
 }

@@ -24,4 +24,6 @@ public interface QuestionService {
 
 	void deleteQuestion(Long pIdQuestion);
 
+	List<Question> getAllQuestionsByNiveau(Niveau pNiveau);
+
 }
