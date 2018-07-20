@@ -11,5 +11,7 @@ public interface ReponseService {
 	Optional<Reponse> findReponseById(Long pId);
 
 	Reponse updateReponse(Reponse pReponse);
+	
+	void deleteReponse(Reponse reponse);
 
 }

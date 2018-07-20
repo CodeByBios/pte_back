@@ -79,5 +79,10 @@ public class ReponseServiceImpl extends AbstractServiceImpl<Reponse> implements 
 		return lReponseUpdate;
 		
 	}
+	
+	@Override
+	public void deleteReponse(Reponse reponse) {
+		reponseDao.delete(reponse);
+	}
 
 }

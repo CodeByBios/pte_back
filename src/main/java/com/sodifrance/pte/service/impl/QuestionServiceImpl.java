@@ -1,8 +1,10 @@
 package com.sodifrance.pte.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,44 +34,46 @@ public class QuestionServiceImpl extends AbstractServiceImpl<Question> implement
 
 	@Autowired
 	private QuestionDao questionDao;
-	
+
 	@Autowired
 	private ReponseService reponseService;
-	
+
 	@Autowired
 	private LangageService langageService;
-	
+
 	@Autowired
 	private ReponseDao reponseDao;
-	
+
 	@Autowired
 	private CandidatDao candidatDao;
-	
+
 	@Override
 	protected JpaRepository<Question, Long> getEntityDao() {
 		return questionDao;
 	}
-	
+
 	@Override
 	public Optional<Question> findQuestionById(Long id) {
 		return questionDao.findById(id);
 	}
-	
+
 	/**
 	 * Convert update dto
-	 * @param pQuestionUpdate : les nouvelles données de la question
+	 * 
+	 * @param pQuestionUpdate
+	 *            : les nouvelles données de la question
 	 * @return La question à enregistrer
 	 */
 	private Question initUpdateQuestion(Question pQuestionUpdate) {
-		
+
 		Question lQuestion = findQuestionById(pQuestionUpdate.getId()).get();
-		
-		if(lQuestion != null) {
-			
-			if(pQuestionUpdate.getEtat() != null) {
-				if(lQuestion.getEtat().equals(Boolean.TRUE)) {
+
+		if (lQuestion != null) {
+
+			if (pQuestionUpdate.getEtat() != null) {
+				if (lQuestion.getEtat().equals(Boolean.TRUE)) {
 					lQuestion.setEtat(pQuestionUpdate.getEtat());
-				}else {
+				} else {
 					lQuestion.setEtat(pQuestionUpdate.getEtat());
 					lQuestion.setLibelle(pQuestionUpdate.getLibelle());
 					lQuestion.setLangages(pQuestionUpdate.getLangages());
@@ -78,101 +82,118 @@ public class QuestionServiceImpl extends AbstractServiceImpl<Question> implement
 					lQuestion.setReponses(pQuestionUpdate.getReponses());
 				}
 			}
-		}else throw new PteParametersException("La question n'esxiste pas");
-		
+		} else
+			throw new PteParametersException("La question n'esxiste pas");
+
 		return lQuestion;
 	}
-	
+
 	/**
 	 * Créationn de la Question avec les Réponses
+	 * 
 	 * @param pQuestion
 	 * @return La question à enregistrer
 	 */
 	@Override
 	public Question createQuestion(Question pQuestion) {
-		
-		pQuestion.getReponses().forEach(reponse ->{
+
+		pQuestion.getReponses().forEach(reponse -> {
 			reponseService.createReponse(reponse);
 		});
-		
+
 		return super.createEntity(pQuestion);
 	}
-	
+
 	/**
 	 * Modification de la Question avec les Réponses
+	 * 
 	 * @param pQuestion
 	 * @return La question à enregistrer avec les réponses
 	 */
 	@Override
 	public Question updateQuestion(Question pQuestion) {
-		
+
 		Question lQuestionUpdate = initUpdateQuestion(pQuestion);
-		
-		lQuestionUpdate.getReponses().forEach(updateReponse ->{
+
+		lQuestionUpdate.getReponses().forEach(updateReponse -> {
 			reponseService.updateReponse(updateReponse);
 		});
-		
+
 		super.updateEntity(lQuestionUpdate);
-		
+
 		return lQuestionUpdate;
-		
+
 	}
-	
+
 	@Override
-	public List<Question> getAllQuestions(){
+	public List<Question> getAllQuestions() {
 		return questionDao.findAll();
 	}
-	
+
 	@Override
-	public List<Question> getAllQuestionByNiveauxAndLangagesAndTypeQuestion(Niveau pNiveau, Langage pLangage, TypeQuestion pTypeQuestion){
+	public List<Question> getAllQuestionByNiveauxAndLangagesAndTypeQuestion(Niveau pNiveau, Langage pLangage,
+			TypeQuestion pTypeQuestion) {
 		return questionDao.findByNiveauxAndLangagesAndTypeQuestion(pNiveau, pLangage, pTypeQuestion);
 	}
-	
+
 	@Override
-	public List<Question> getAllQuestionsActives(Boolean actif){
+	public List<Question> getAllQuestionsActives(Boolean actif) {
 		List<Question> lListQuestions = this.getAllQuestions();
-		if(actif == null) {
+		if (actif == null) {
 			return lListQuestions;
-		}else {
-			return lListQuestions.stream().filter(quest -> actif ? quest.getEtat() : !quest.getEtat()).collect(Collectors.toList());
+		} else {
+			return lListQuestions.stream().filter(quest -> actif ? quest.getEtat() : !quest.getEtat())
+					.collect(Collectors.toList());
 		}
 	}
-	
 
 	/**
 	 * Suppression d'une question non utilisée par un candidat
+	 * 
 	 * @param pQuestion
-	 * @return 
+	 * @return
 	 */
 	@Override
 	public void deleteQuestion(Long pIdQuestion) {
 		Question lQuestion = findQuestionById(pIdQuestion).get();
-		if(lQuestion.getId() != null) {
+
+		if (lQuestion.getId() != null) {
 			List<Candidat> lListCandidat = candidatDao.findAll();
-			List<Question> lListQuestionCandidat = new ArrayList<Question>();
-			
-			lListCandidat.forEach(candit ->{
+			Set<Question> lListQuestionCandidat = new HashSet<Question>();
+
+			// Set<Question> lListQuestionsRandomSansDoublons = new HashSet<Question>();
+			// List<Question> lConvertSetToListQuestion = new
+			// ArrayList<>(lListQuestionsRandomSansDoublons);
+
+			lListCandidat.forEach(candit -> {
 				lListQuestionCandidat.addAll(candit.getQuestions());
 			});
 			
-			lListQuestionCandidat.forEach(questCandit -> {
-				if(!questCandit.getId().equals(lQuestion.getId())) {
-					if(lQuestion.getReponses() != null) {
-						lQuestion.getReponses().forEach(reponse ->{
-							reponseDao.delete(reponse);
-						});
-					}
-					questionDao.delete(lQuestion);
-				}else {
-					throw new PteParametersException("Cette Question ne peut être supprimer");
+			int i = 0;
+			for (Question question : lListQuestionCandidat) {
+
+				if (!question.getId().equals(lQuestion.getId())) {
+                    i++;
+				} else {
+					i--;
 				}
-			});
+			}
+			
+			if(i == lListQuestionCandidat.size()) {
+				lQuestion.getReponses().forEach(reponse -> {
+					reponseService.deleteReponse(reponse);
+				});
+				
+				questionDao.delete(lQuestion);
+			}else {
+				log.debug("impossible de supprimer cette question !!!");
+			}
 		}
 	}
 
 	@Override
 	public List<Question> getAllQuestionsByNiveau(Niveau pNiveau) {
-		//return questionDao.findAndGroupBy(pNiveau);
+		// return questionDao.findAndGroupBy(pNiveau);
 		return null;
 	}
 }
