@@ -160,36 +160,7 @@ public class QuestionServiceImpl extends AbstractServiceImpl<Question> implement
 		if (lQuestion.getId() != null) {
 			List<Candidat> lListCandidat = candidatDao.findAll();
 			Set<Question> lListQuestionCandidat = new HashSet<Question>();
-<<<<<<< HEAD
 
-			// Set<Question> lListQuestionsRandomSansDoublons = new HashSet<Question>();
-			// List<Question> lConvertSetToListQuestion = new
-			// ArrayList<>(lListQuestionsRandomSansDoublons);
-
-			lListCandidat.forEach(candit -> {
-				lListQuestionCandidat.addAll(candit.getQuestions());
-			});
-			
-			int i = 0;
-			for (Question question : lListQuestionCandidat) {
-
-				if (!question.getId().equals(lQuestion.getId())) {
-                    i++;
-				} else {
-					i--;
-				}
-			}
-			
-			if(i == lListQuestionCandidat.size()) {
-				lQuestion.getReponses().forEach(reponse -> {
-					reponseService.deleteReponse(reponse);
-				});
-				
-				questionDao.delete(lQuestion);
-			}else {
-				log.debug("impossible de supprimer cette question !!!");
-=======
-			
 			lListCandidat.forEach(candit ->{
 				lListQuestionCandidat.addAll(candit.getQuestions());
 			});
@@ -203,7 +174,6 @@ public class QuestionServiceImpl extends AbstractServiceImpl<Question> implement
 					});
 				}
 				questionDao.delete(lQuestion);
->>>>>>> 1cf3a91a45852626f78d102b7837fc9694afb20b
 			}
 		}
 	}
