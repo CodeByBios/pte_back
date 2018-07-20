@@ -78,7 +78,7 @@ public class CreateTestServiceImpl implements TestService {
 		
 		if(lListQuestions!=null) {
 			//TODO modifier pour 20 questions
-			int lNombreMaxQuestions = 5;
+			int lNombreMaxQuestions = 2;
 			Random lRandomQuestion = new Random();
 
 			//TODO vérifier bien que le random n'a pas de doublonts

@@ -160,6 +160,7 @@ public class QuestionServiceImpl extends AbstractServiceImpl<Question> implement
 		if (lQuestion.getId() != null) {
 			List<Candidat> lListCandidat = candidatDao.findAll();
 			Set<Question> lListQuestionCandidat = new HashSet<Question>();
+<<<<<<< HEAD
 
 			// Set<Question> lListQuestionsRandomSansDoublons = new HashSet<Question>();
 			// List<Question> lConvertSetToListQuestion = new
@@ -187,6 +188,22 @@ public class QuestionServiceImpl extends AbstractServiceImpl<Question> implement
 				questionDao.delete(lQuestion);
 			}else {
 				log.debug("impossible de supprimer cette question !!!");
+=======
+			
+			lListCandidat.forEach(candit ->{
+				lListQuestionCandidat.addAll(candit.getQuestions());
+			});
+			
+			if(lListQuestionCandidat.contains(lQuestion)){
+				throw new PteParametersException("Cette Question ne peut être supprimer");
+			}else {
+				if(lQuestion.getReponses() != null) {
+					lQuestion.getReponses().forEach(reponse ->{
+						reponseDao.delete(reponse);
+					});
+				}
+				questionDao.delete(lQuestion);
+>>>>>>> 1cf3a91a45852626f78d102b7837fc9694afb20b
 			}
 		}
 	}

@@ -82,4 +82,14 @@ public class CandidatServiceImpl extends AbstractServiceImpl<Candidat> implement
 		return super.updateEntity(pCandidat);
 	}
 	
+	@Override
+	public void deleteCandidat(Long pIdCandidat) {
+		Candidat lCandidat = candidatDao.findById(pIdCandidat).get();
+		if(lCandidat.getId() != null) {
+			candidatDao.delete(lCandidat);
+		}else {
+			throw new PteParametersException("Le candidat n'existe pas");
+		}
+	}
+	
 }
