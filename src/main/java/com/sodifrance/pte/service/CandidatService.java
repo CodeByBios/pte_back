@@ -17,4 +17,6 @@ public interface CandidatService {
 	
 	Candidat saveNoteCandidat(Candidat pCandidatUpdate);
 
+	void deleteCandidat(Long pIdCandiat);
+
 }
