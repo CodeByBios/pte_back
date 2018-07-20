@@ -87,6 +87,8 @@ public class CandidatServiceImpl extends AbstractServiceImpl<Candidat> implement
 		Candidat lCandidat = candidatDao.findById(pIdCandidat).get();
 		if(lCandidat.getId() != null) {
 			candidatDao.delete(lCandidat);
+		}else {
+			throw new PteParametersException("Le candidat n'existe pas");
 		}
 	}
 	

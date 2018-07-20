@@ -1,8 +1,10 @@
 package com.sodifrance.pte.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -149,24 +151,22 @@ public class QuestionServiceImpl extends AbstractServiceImpl<Question> implement
 		Question lQuestion = findQuestionById(pIdQuestion).get();
 		if(lQuestion.getId() != null) {
 			List<Candidat> lListCandidat = candidatDao.findAll();
-			List<Question> lListQuestionCandidat = new ArrayList<Question>();
+			Set<Question> lListQuestionCandidat = new HashSet<Question>();
 			
 			lListCandidat.forEach(candit ->{
 				lListQuestionCandidat.addAll(candit.getQuestions());
 			});
 			
-			lListQuestionCandidat.forEach(questCandit -> {
-				if(!questCandit.getId().equals(lQuestion.getId())) {
-					if(lQuestion.getReponses() != null) {
-						lQuestion.getReponses().forEach(reponse ->{
-							reponseDao.delete(reponse);
-						});
-					}
-					questionDao.delete(lQuestion);
-				}else {
-					throw new PteParametersException("Cette Question ne peut être supprimer");
+			if(lListQuestionCandidat.contains(lQuestion)){
+				throw new PteParametersException("Cette Question ne peut être supprimer");
+			}else {
+				if(lQuestion.getReponses() != null) {
+					lQuestion.getReponses().forEach(reponse ->{
+						reponseDao.delete(reponse);
+					});
 				}
-			});
+				questionDao.delete(lQuestion);
+			}
 		}
 	}
 
