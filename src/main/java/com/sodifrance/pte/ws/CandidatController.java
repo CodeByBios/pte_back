@@ -100,7 +100,7 @@ public class CandidatController {
 	public CandidatDto updateCandidat(@RequestBody CandidatDto pCandidatDto) throws Exception {
 		log.debug("Mise à jour de la note du : candidat {}.", pCandidatDto);
 
-		Candidat lCandidat = validateAndTransform(pCandidatDto);
+		Candidat lCandidat = candidatTransform.convertToEntity(pCandidatDto);
 		//Mise à jour de la note dans candidat
 		lCandidat = candidatService.saveNoteCandidat(lCandidat);
 		

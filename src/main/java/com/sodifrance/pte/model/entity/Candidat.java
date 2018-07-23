@@ -42,7 +42,6 @@ public class Candidat implements Serializable {
 	@Size(min = 2, max = 255)
 	String prenom;
 	
-	@Size(min = 2, max = 255)
 	String note;
 	
 	@NotNull
@@ -62,7 +61,7 @@ public class Candidat implements Serializable {
 	}
 
 	public Candidat(@NotNull Long temps, @NotNull @Size(min = 2, max = 255) String nom,
-			@NotNull @Size(min = 2, max = 255) String prenom, @NotNull @Size(min = 2, max = 255) String note,
+			@NotNull @Size(min = 2, max = 255) String prenom, String note,
 			@NotNull LocalDateTime date, Utilisateur utlisateur, List<Question> questions) {
 		super();
 		this.temps = temps;
