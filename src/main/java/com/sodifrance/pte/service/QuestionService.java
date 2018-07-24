@@ -1,6 +1,7 @@
 package com.sodifrance.pte.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.sodifrance.pte.model.entity.Langage;
@@ -24,6 +25,6 @@ public interface QuestionService {
 
 	void deleteQuestion(Long pIdQuestion);
 
-	List<Question> getAllQuestionsByNiveau(Niveau pNiveau);
+	Map<Object, List<Question>> getAllQuestionsByNiveau();
 
 }

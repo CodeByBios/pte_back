@@ -3,6 +3,7 @@ package com.sodifrance.pte.service.impl;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -179,8 +180,12 @@ public class QuestionServiceImpl extends AbstractServiceImpl<Question> implement
 	}
 
 	@Override
-	public List<Question> getAllQuestionsByNiveau(Niveau pNiveau) {
-		// return questionDao.findAndGroupBy(pNiveau);
-		return null;
+	public Map<Object, List<Question>> getAllQuestionsByNiveau() {
+		
+		List<Question> lListQuestions = this.getAllQuestions();
+		
+		Map<Object, List<Question>> lListQuestionByNiveau = lListQuestions.stream().collect(Collectors.groupingBy(niveaux -> niveaux.getNiveaux().stream().collect(Collectors.groupingBy(niveau -> niveau.getLibelle()))));
+		
+		return lListQuestionByNiveau;
 	}
 }

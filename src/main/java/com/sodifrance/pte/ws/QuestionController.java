@@ -1,6 +1,7 @@
 package com.sodifrance.pte.ws;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -107,10 +108,11 @@ public class QuestionController {
      * @throws Exception
      */
     @GetMapping(value = PATH_QUESTION)
-    public List<QuestionDto> getAllQuestionsByNiveau(@RequestBody Niveau pNiveau) throws Exception {
+    public Map<Object, List<Question>> getAllQuestionsByNiveau() throws Exception {
         log.debug("Récupération des questons par niveaux.");
-        List<Question> lListQuestions = questionService.getAllQuestionsByNiveau(pNiveau);
-        return questionTransform.listEntityToListDto(lListQuestions);
+        Map<Object, List<Question>> lListQuestions = questionService.getAllQuestionsByNiveau();
+        //return questionTransform.listEntityMapToListDto(lListQuestions);
+        return lListQuestions;
     }
     
     /**
