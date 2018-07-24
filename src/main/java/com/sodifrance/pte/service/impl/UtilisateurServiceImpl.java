@@ -41,14 +41,16 @@ public class UtilisateurServiceImpl implements UtilisateurService{
 	}
 
 	@Override
-	public String getConnection(String login, String password) {
-		String rep = "refuse";
+	public Utilisateur getConnection(String login, String password) {
+		Utilisateur rep = null;
+		
 		Utilisateur utilisateur = utilisateurDao.findByLogin(login);
 		if (utilisateur != null ) {
 			if(password.equals(utilisateur.getPassword())) {
-				rep = utilisateur.getRole().getIdentite();
+				rep = utilisateur;
 			}
 		}
+		
 		return rep;
 	}
 

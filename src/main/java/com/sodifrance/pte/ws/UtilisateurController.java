@@ -58,7 +58,7 @@ public class UtilisateurController {
 	// teste la connexion
 	@PostMapping("/connexion")
 	@ResponseBody
-	public String getConnection(@RequestBody ConnectionDto connectionDto) {
+	public Utilisateur getConnection(@RequestBody ConnectionDto connectionDto) {
 		return UtilisateurServiceImpl.getConnection(connectionDto.getLogin(), connectionDto.getPassword());
 	}
 

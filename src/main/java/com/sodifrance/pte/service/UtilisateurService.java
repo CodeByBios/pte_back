@@ -19,7 +19,7 @@ public interface UtilisateurService {
 
 	public Utilisateur newUtilisateur(Utilisateur utilisateur);
 	
-	public String getConnection(String login, String password);
+	public Utilisateur getConnection(String login, String password);
 	
 	Optional<Utilisateur> finfUtilisateurById(Long pId);
 }
