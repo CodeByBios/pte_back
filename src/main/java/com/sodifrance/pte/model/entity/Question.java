@@ -2,7 +2,9 @@ package com.sodifrance.pte.model.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -69,6 +71,18 @@ public class Question implements Serializable {
 		this.langages = langages;
 		this.niveaux = niveaux;
 		this.typeQuestion = typeQuestion;
+	}
+	
+	public String getNiveau() {
+		//Set<Niveau> lListNiveaux = new HashSet<Niveau>(getNiveaux());
+		List<Niveau> lNiveaux = getNiveaux(); //new ArrayList<>(lListNiveaux);
+		String lLibelleNiveau = "";
+		Niveau lNiveau = new Niveau();
+		
+		lNiveaux.forEach(niveau -> {
+			lNiveau.setLibelle(niveau.getLibelle());
+		});
+		return lLibelleNiveau = lNiveau.getLibelle();
 	}
 	
 	

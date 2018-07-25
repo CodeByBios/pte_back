@@ -2,6 +2,7 @@ package com.sodifrance.pte.transform;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
@@ -207,5 +208,4 @@ public class QuestionTransform {
         List<QuestionDto> dtoList = lListQuestion.stream().filter(elt -> elt != null).map(u -> this.convertToDto(u)).collect(Collectors.toList());
         return dtoList;
     }
-    
 }

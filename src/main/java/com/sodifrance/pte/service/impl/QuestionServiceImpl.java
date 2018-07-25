@@ -1,8 +1,10 @@
 package com.sodifrance.pte.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -12,10 +14,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sodifrance.pte.commun.utils.PteAbstractConstants;
 import com.sodifrance.pte.dao.CandidatDao;
 import com.sodifrance.pte.dao.QuestionDao;
 import com.sodifrance.pte.dao.ReponseDao;
 import com.sodifrance.pte.exceptions.PteParametersException;
+import com.sodifrance.pte.model.dto.InfoQuestionDto;
+import com.sodifrance.pte.model.dto.ResumeQuestionDto;
 import com.sodifrance.pte.model.entity.Candidat;
 import com.sodifrance.pte.model.entity.Langage;
 import com.sodifrance.pte.model.entity.Niveau;
@@ -25,6 +30,7 @@ import com.sodifrance.pte.service.LangageService;
 import com.sodifrance.pte.service.QuestionService;
 import com.sodifrance.pte.service.ReponseService;
 
+import ch.qos.logback.core.joran.action.Action;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -177,10 +183,38 @@ public class QuestionServiceImpl extends AbstractServiceImpl<Question> implement
 			}
 		}
 	}
-
+	
 	@Override
-	public List<Question> getAllQuestionsByNiveau(Niveau pNiveau) {
-		// return questionDao.findAndGroupBy(pNiveau);
-		return null;
+	public List<InfoQuestionDto> getAllQuestionsByNiveau() {
+		
+		List<Question> lListQuestions = this.getAllQuestions();
+		
+		List<InfoQuestionDto> lLisInfoQuestionDto =  new ArrayList<InfoQuestionDto>();
+		
+		Set<Niveau> lLisNiveaux = new HashSet<>();
+		
+		lListQuestions.forEach(niveaux -> {
+			lLisNiveaux.addAll(niveaux.getNiveaux());
+		});
+		
+		lLisNiveaux.forEach(niveau -> {
+			
+			InfoQuestionDto lInfoQuestionDto =  new InfoQuestionDto();
+			lInfoQuestionDto.setLibelleNiveau(niveau.getLibelle());
+			
+			ResumeQuestionDto lResumeQuestionDto = new ResumeQuestionDto();
+			lResumeQuestionDto.setNbQuestionValidee((int)lListQuestions.stream().filter(niv -> niv.getNiveau().equals(niveau.getLibelle())).filter(qVal -> qVal.getEtat().equals(Boolean.TRUE)).count());
+			lResumeQuestionDto.setNbQuestionNonValidee((int)lListQuestions.stream().filter(niv -> niv.getNiveau().equals(niveau.getLibelle())).filter(qVal -> qVal.getEtat().equals(Boolean.FALSE)).count());
+			lResumeQuestionDto.setNbQuestionTechinque((int)lListQuestions.stream().filter(niv -> niv.getNiveau().equals(niveau.getLibelle())).filter(qVal -> qVal.getTypeQuestion().getLibelle().equals(PteAbstractConstants.TYPE_QUESTION_TECHNIQUE)).count());
+			lResumeQuestionDto.setNbQuestionLogique((int)lListQuestions.stream().filter(niv -> niv.getNiveau().equals(niveau.getLibelle())).filter(qVal -> qVal.getTypeQuestion().getLibelle().equals(PteAbstractConstants.TYPE_QUESTION_LOGIQUE)).count());
+			lResumeQuestionDto.setNbQuestionAnglais((int)lListQuestions.stream().filter(niv -> niv.getNiveau().equals(niveau.getLibelle())).filter(qVal -> qVal.getTypeQuestion().getLibelle().equals(PteAbstractConstants.TYPE_QUESTION_ANGLAIS)).count());
+			lResumeQuestionDto.setNbQuestionFancais((int)lListQuestions.stream().filter(niv -> niv.getNiveau().equals(niveau.getLibelle())).filter(qVal -> qVal.getTypeQuestion().getLibelle().equals(PteAbstractConstants.TYPE_QUESTION_FRANCAIS)).count());
+
+			lInfoQuestionDto.setResumeQuestionDto(lResumeQuestionDto);
+			lLisInfoQuestionDto.add(lInfoQuestionDto);
+		});
+		
+		return lLisInfoQuestionDto;
+		
 	}
 }
