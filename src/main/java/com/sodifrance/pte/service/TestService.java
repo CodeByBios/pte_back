@@ -15,6 +15,6 @@ public interface TestService {
 
 	List<TypeQuestion> getListTypesQuestions();
 
-	List<Question> createTest(Long pIdNiveau, Long pIdLangage, Long pIdTypeQuestion, Long pIdCandidat);
+	List<Question> createTest(Long pIdNiveau, List<Long> pIdLangages, Long pIdTypeQuestion, Long pIdCandidat);
 
 }
