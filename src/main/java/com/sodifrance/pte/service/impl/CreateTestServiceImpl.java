@@ -64,11 +64,13 @@ public class CreateTestServiceImpl implements TestService {
 	}
 	
 	@Override
-	public List<Question> createTest(Long pIdNiveau, Long pIdLangage, Long pIdTypeQuestion, Long pIdCandidat) {
+	public List<Question> createTest(Long pIdNiveau, List<Long> pIdLangages, Long pIdTypeQuestion, Long pIdCandidat) {
 		
-		//List<Question> lListQuestions = questionService.getAllQuestion();
+		List<Question> lListQuestions = new ArrayList<Question>();
 		
-		List<Question> lListQuestions = questionService.getAllQuestionByNiveauxAndLangagesAndTypeQuestion(niveauDao.findById(pIdNiveau).get(), langageDao.findById(pIdLangage).get(), typeQuestionDao.findById(pIdTypeQuestion).get());
+		pIdLangages.forEach(idLangage -> {
+			lListQuestions.addAll(questionService.getAllQuestionByNiveauxAndLangagesAndTypeQuestion(niveauDao.findById(pIdNiveau).get(), langageDao.findById(idLangage).get(), typeQuestionDao.findById(pIdTypeQuestion).get()));
+		});
 		
 		List<Question> lListQuestionsActives = lListQuestions.stream().filter(questActif -> questActif.getEtat().equals(Boolean.TRUE)).collect(Collectors.toList());
 		

@@ -96,12 +96,12 @@ public class TestController {
         return questionTransform.convertToEntity(pQuestionDto);
     }
     
-	@PostMapping(value = PATH_TEST_CREER + "/{idNiveau}" + "/{idLangage}" + "/{idTypeQuestion}" + "/{idCandidat}")
-	public List<QuestionDto> createTest(@PathVariable Long idNiveau, @PathVariable Long idLangage, @PathVariable Long idTypeQuestion, @PathVariable Long idCandidat) throws Exception {
-		log.debug("Creation d'un Test : de niveau {} du Langage {} du type de question {} et du candidat {}.", idNiveau, idLangage, idTypeQuestion, idCandidat);
+	@PostMapping(value = PATH_TEST_CREER + "/{idNiveau}" + "/{idLangages}" + "/{idTypeQuestion}" + "/{idCandidat}")
+	public List<QuestionDto> createTest(@PathVariable Long idNiveau, @PathVariable List<Long> idLangages, @PathVariable Long idTypeQuestion, @PathVariable Long idCandidat) throws Exception {
+		log.debug("Creation d'un Test : de niveau {} du Langage {} du type de question {} et du candidat {}.", idNiveau, idLangages, idTypeQuestion, idCandidat);
 
 		//Creation du Test
-		List<Question> lListQuestions = testService.createTest(idNiveau, idLangage, idTypeQuestion, idCandidat);
+		List<Question> lListQuestions = testService.createTest(idNiveau, idLangages, idTypeQuestion, idCandidat);
 		
 		return PteCollectionUtils.transformCollectionToList(lListQuestions, question -> questionTransform.convertToDto(question));
 	}
