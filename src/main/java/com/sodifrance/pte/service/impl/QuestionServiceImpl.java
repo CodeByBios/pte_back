@@ -205,10 +205,10 @@ public class QuestionServiceImpl extends AbstractServiceImpl<Question> implement
 			ResumeQuestionDto lResumeQuestionDto = new ResumeQuestionDto();
 			lResumeQuestionDto.setNbQuestionValidee((int)lListQuestions.stream().filter(niv -> niv.getNiveau().equals(niveau.getLibelle())).filter(qVal -> qVal.getEtat().equals(Boolean.TRUE)).count());
 			lResumeQuestionDto.setNbQuestionNonValidee((int)lListQuestions.stream().filter(niv -> niv.getNiveau().equals(niveau.getLibelle())).filter(qVal -> qVal.getEtat().equals(Boolean.FALSE)).count());
-			lResumeQuestionDto.setNbQuestionTechinque((int)lListQuestions.stream().filter(niv -> niv.getNiveau().equals(niveau.getLibelle())).filter(qVal -> qVal.getTypeQuestion().getLibelle().equals(PteAbstractConstants.TYPE_QUESTION_TECHNIQUE)).count());
-			lResumeQuestionDto.setNbQuestionLogique((int)lListQuestions.stream().filter(niv -> niv.getNiveau().equals(niveau.getLibelle())).filter(qVal -> qVal.getTypeQuestion().getLibelle().equals(PteAbstractConstants.TYPE_QUESTION_LOGIQUE)).count());
-			lResumeQuestionDto.setNbQuestionAnglais((int)lListQuestions.stream().filter(niv -> niv.getNiveau().equals(niveau.getLibelle())).filter(qVal -> qVal.getTypeQuestion().getLibelle().equals(PteAbstractConstants.TYPE_QUESTION_ANGLAIS)).count());
-			lResumeQuestionDto.setNbQuestionFancais((int)lListQuestions.stream().filter(niv -> niv.getNiveau().equals(niveau.getLibelle())).filter(qVal -> qVal.getTypeQuestion().getLibelle().equals(PteAbstractConstants.TYPE_QUESTION_FRANCAIS)).count());
+			lResumeQuestionDto.setNbQuestionTechinque((int)lListQuestions.stream().filter(qVal -> qVal.getEtat().equals(Boolean.TRUE)).filter(niv -> niv.getNiveau().equals(niveau.getLibelle())).filter(qVal -> qVal.getTypeQuestion().getLibelle().equals(PteAbstractConstants.TYPE_QUESTION_TECHNIQUE)).count());
+			lResumeQuestionDto.setNbQuestionLogique((int)lListQuestions.stream().filter(qVal -> qVal.getEtat().equals(Boolean.TRUE)).filter(niv -> niv.getNiveau().equals(niveau.getLibelle())).filter(qVal -> qVal.getTypeQuestion().getLibelle().equals(PteAbstractConstants.TYPE_QUESTION_LOGIQUE)).count());
+			lResumeQuestionDto.setNbQuestionAnglais((int)lListQuestions.stream().filter(qVal -> qVal.getEtat().equals(Boolean.TRUE)).filter(niv -> niv.getNiveau().equals(niveau.getLibelle())).filter(qVal -> qVal.getTypeQuestion().getLibelle().equals(PteAbstractConstants.TYPE_QUESTION_ANGLAIS)).count());
+			lResumeQuestionDto.setNbQuestionFancais((int)lListQuestions.stream().filter(qVal -> qVal.getEtat().equals(Boolean.TRUE)).filter(niv -> niv.getNiveau().equals(niveau.getLibelle())).filter(qVal -> qVal.getTypeQuestion().getLibelle().equals(PteAbstractConstants.TYPE_QUESTION_FRANCAIS)).count());
 
 			lInfoQuestionDto.setResumeQuestionDto(lResumeQuestionDto);
 			lLisInfoQuestionDto.add(lInfoQuestionDto);
