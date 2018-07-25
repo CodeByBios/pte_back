@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sodifrance.pte.exceptions.PteParametersException;
+import com.sodifrance.pte.model.dto.InfoQuestionDto;
 import com.sodifrance.pte.model.dto.QuestionDto;
 import com.sodifrance.pte.model.entity.Niveau;
 import com.sodifrance.pte.model.entity.Question;
@@ -108,10 +109,9 @@ public class QuestionController {
      * @throws Exception
      */
     @GetMapping(value = PATH_QUESTION)
-    public Map<Object, List<Question>> getAllQuestionsByNiveau() throws Exception {
+    public List<InfoQuestionDto> getAllQuestionsByNiveau() throws Exception {
         log.debug("Récupération des questons par niveaux.");
-        Map<Object, List<Question>> lListQuestions = questionService.getAllQuestionsByNiveau();
-        //return questionTransform.listEntityMapToListDto(lListQuestions);
+        List<InfoQuestionDto> lListQuestions = questionService.getAllQuestionsByNiveau();
         return lListQuestions;
     }
     

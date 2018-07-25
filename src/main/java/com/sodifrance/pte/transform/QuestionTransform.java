@@ -208,15 +208,4 @@ public class QuestionTransform {
         List<QuestionDto> dtoList = lListQuestion.stream().filter(elt -> elt != null).map(u -> this.convertToDto(u)).collect(Collectors.toList());
         return dtoList;
     }
-    
-    /**
-     * Converti une liste d'entités en liste de dto
-     * @param entityList la liste d'entités à convertir
-     * @return la liste de dto correspondants
-     */
-   /* public Map<Object, List<Question>> listEntityMapToListDto(Map<Object, List<Question>> lListQuestion) {
-    	Map<Object, List<Question>> dtoList = lListQuestion.stream().filter(elt -> elt != null).map(u -> this.convertToDto(u)).collect(Collectors.toList());
-        return dtoList;
-    }*/
-    
 }

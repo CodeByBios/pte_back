@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.sodifrance.pte.model.dto.InfoQuestionDto;
 import com.sodifrance.pte.model.entity.Langage;
 import com.sodifrance.pte.model.entity.Niveau;
 import com.sodifrance.pte.model.entity.Question;
@@ -25,6 +26,6 @@ public interface QuestionService {
 
 	void deleteQuestion(Long pIdQuestion);
 
-	Map<Object, List<Question>> getAllQuestionsByNiveau();
+	List<InfoQuestionDto> getAllQuestionsByNiveau();
 
 }
