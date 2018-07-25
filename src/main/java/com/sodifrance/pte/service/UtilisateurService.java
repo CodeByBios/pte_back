@@ -3,6 +3,7 @@ package com.sodifrance.pte.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.sodifrance.pte.model.dto.ConnexionDto;
 import com.sodifrance.pte.model.dto.UtilisateurDto;
 import com.sodifrance.pte.model.entity.Utilisateur;
 
@@ -19,7 +20,7 @@ public interface UtilisateurService {
 
 	public Utilisateur newUtilisateur(Utilisateur utilisateur);
 	
-	public Utilisateur getConnection(String login, String password);
+	public ConnexionDto getConnection(String login, String password);
 	
 	Optional<Utilisateur> finfUtilisateurById(Long pId);
 }

@@ -9,13 +9,15 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Setter
 @Getter
-public class Role implements Serializable {
+public class Role implements Serializable, GrantedAuthority {
 
 	private static final long serialVersionUID = 3117584371962380796L;
 
@@ -36,5 +38,10 @@ public class Role implements Serializable {
 	public Role(@NotNull @Size(min = 2, max = 255) String identite) {
 		super();
 		this.identite = identite;
+	}
+
+	@Override
+	public String getAuthority() {
+		return getIdentite();
 	}
 }

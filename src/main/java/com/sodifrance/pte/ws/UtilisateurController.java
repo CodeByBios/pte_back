@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sodifrance.pte.model.dto.ConnectionDto;
+import com.sodifrance.pte.model.dto.ConnexionDto;
 import com.sodifrance.pte.model.dto.UtilisateurDto;
 import com.sodifrance.pte.model.entity.Utilisateur;
 import com.sodifrance.pte.service.UtilisateurService;
@@ -58,7 +59,7 @@ public class UtilisateurController {
 	// teste la connexion
 	@PostMapping("/connexion")
 	@ResponseBody
-	public Utilisateur getConnection(@RequestBody ConnectionDto connectionDto) {
+	public ConnexionDto getConnection(@RequestBody ConnectionDto connectionDto) {
 		return UtilisateurServiceImpl.getConnection(connectionDto.getLogin(), connectionDto.getPassword());
 	}
 
