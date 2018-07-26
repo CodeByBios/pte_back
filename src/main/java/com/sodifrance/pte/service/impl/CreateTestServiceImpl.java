@@ -80,11 +80,23 @@ public class CreateTestServiceImpl implements TestService {
 		
 		if(lListQuestions!=null) {
 			//TODO modifier pour 20 questions
-			int lNombreMaxQuestions = 4;
+			int lNombreMaxQuestions = 10;
 			Random lRandomQuestion = new Random();
+			int cpt = 0;
 
 			//TODO vérifier bien que le random n'a pas de doublonts
-			lListQuestionsRandomSansDoublons = lRandomQuestion.ints(lNombreMaxQuestions, 0, lListQuestionsActives.size()).mapToObj(i -> lListQuestionsActives.get(i)).collect(Collectors.toSet());
+			//lListQuestionsRandomSansDoublons = lRandomQuestion.ints(lNombreMaxQuestions, 0, lListQuestionsActives.size()).mapToObj(i -> lListQuestionsActives.get(i)).collect(Collectors.toSet());
+			
+			for (int i = 0; i < lListQuestionsActives.size(); i++) {
+				
+		        int randomIndex = lRandomQuestion.nextInt(lListQuestionsActives.size());
+		        Question randomElement = lListQuestionsActives.get(i);
+		        
+		        if(!lListQuestionsRandomSansDoublons.contains(randomElement) && cpt<lNombreMaxQuestions) {
+		        	lListQuestionsRandomSansDoublons.add(randomElement);
+		        	cpt++;
+		        }
+		    }
 
 			if(lListQuestionsRandomSansDoublons != null && lListQuestionsRandomSansDoublons.size()==lNombreMaxQuestions) {
 				Optional<Candidat> lCandidat = candidatService.findCandidatById(pIdCandidat);

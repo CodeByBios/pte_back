@@ -74,7 +74,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		ConnexionDto rep = new ConnexionDto();
 		Set<String> listRole = new HashSet<String>();
 		Utilisateur user = utilisateurDao.findByLogin(login);
-		listRole.add(user.getRole().getAuthority());
+		
+		if(user != null) {
+			listRole.add(user.getRole().getAuthority());
+		}
 
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login, password));
