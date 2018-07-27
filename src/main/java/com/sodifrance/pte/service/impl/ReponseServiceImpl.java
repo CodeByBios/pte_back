@@ -44,7 +44,7 @@ public class ReponseServiceImpl extends AbstractServiceImpl<Reponse> implements 
 		
 		Reponse lReponse = findReponseById(pReponseUpdate.getId()).get();
 		
-		if(lReponse != null) {
+		if(lReponse.getId() != null) {
 			lReponse.setLibelle(pReponseUpdate.getLibelle());
 			lReponse.setReponseJuste(pReponseUpdate.getReponseJuste());
 
