@@ -17,4 +17,6 @@ public interface TestService {
 
 	List<Question> createTest(Long pIdNiveau, List<Long> pIdLangages, Long pIdTypeQuestion, Long pIdCandidat);
 
+	Boolean countNombresQuestionsTest(Long pIdNiveau, List<Long> pIdLangages, Long pIdTypeQuestion, Long pIdCandidat);
+
 }

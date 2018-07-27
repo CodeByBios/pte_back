@@ -122,7 +122,13 @@ public class QuestionServiceImpl extends AbstractServiceImpl<Question> implement
 		Question lQuestionUpdate = initUpdateQuestion(pQuestion);
 
 		lQuestionUpdate.getReponses().forEach(updateReponse -> {
-			reponseService.updateReponse(updateReponse);
+			
+			if(updateReponse.getId() != null) {
+				reponseService.updateReponse(updateReponse);
+			}else {
+				reponseService.createReponse(updateReponse);
+			}
+			
 		});
 
 		super.updateEntity(lQuestionUpdate);
@@ -183,6 +189,16 @@ public class QuestionServiceImpl extends AbstractServiceImpl<Question> implement
 			}
 		}
 	}
+	
+	/*public int countNbQuestionsByNiveau(Question pQuestion, String pTypeQuestion) {
+		
+		int lNombrequestion = 0;
+		pQuestion.getNiveaux().forEach(niveau -> {
+			lNombrequestion = (int)lListQuestions.stream().filter(qVal -> qVal.getEtat().equals(Boolean.TRUE)).filter(niv -> niv.getNiveau().equals(niveau.getLibelle())).filter(qVal -> qVal.getTypeQuestion().getLibelle().equals(PteAbstractConstants.TYPE_QUESTION_TECHNIQUE)).count();
+		});
+		
+		 return 1;
+	}*/
 	
 	@Override
 	public List<InfoQuestionDto> getAllQuestionsByNiveau() {

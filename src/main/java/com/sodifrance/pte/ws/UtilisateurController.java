@@ -43,7 +43,7 @@ public class UtilisateurController {
 	}
 
 	// retourne un utilisateur
-	@GetMapping("user/{id}")
+	@GetMapping("/{id}")
 	public Utilisateur getUtilisateurById(@PathVariable Long id) {
 		return UtilisateurServiceImpl.getUtilisateur(id).get();
 	}
