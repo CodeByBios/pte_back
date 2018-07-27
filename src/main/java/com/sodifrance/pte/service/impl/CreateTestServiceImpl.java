@@ -48,6 +48,8 @@ public class CreateTestServiceImpl implements TestService {
 	@Autowired
 	private QuestionService questionService;
 	
+	private int nombreMaxQuestions = 10; //TODO modifier pour 20 questions
+	
 	@Override
 	public List<Langage> getListLangages(){
 		return langageDao.findAll();
@@ -79,8 +81,6 @@ public class CreateTestServiceImpl implements TestService {
 		List<Question> lConvertSetToListQuestion = new ArrayList<>(lListQuestionsRandomSansDoublons);
 		
 		if(lListQuestions!=null) {
-			//TODO modifier pour 20 questions
-			int lNombreMaxQuestions = 10;
 			Random lRandomQuestion = new Random();
 			int cpt = 0;
 
@@ -92,13 +92,13 @@ public class CreateTestServiceImpl implements TestService {
 		        int randomIndex = lRandomQuestion.nextInt(lListQuestionsActives.size());
 		        Question randomElement = lListQuestionsActives.get(i);
 		        
-		        if(!lListQuestionsRandomSansDoublons.contains(randomElement) && cpt<lNombreMaxQuestions) {
+		        if(!lListQuestionsRandomSansDoublons.contains(randomElement) && cpt<this.nombreMaxQuestions) {
 		        	lListQuestionsRandomSansDoublons.add(randomElement);
 		        	cpt++;
 		        }
 		    }
 
-			if(lListQuestionsRandomSansDoublons != null && lListQuestionsRandomSansDoublons.size()==lNombreMaxQuestions) {
+			if(lListQuestionsRandomSansDoublons != null) {
 				Optional<Candidat> lCandidat = candidatService.findCandidatById(pIdCandidat);
 				if(lCandidat.isPresent()) {
 					//Mise à jour des question dans candidat
@@ -108,8 +108,6 @@ public class CreateTestServiceImpl implements TestService {
 				}else {
 					throw new PteParametersException("Le candidat n'exixte pas");
 				}
-			}else {
-				throw new PteParametersException("Le nombre de question pour passer ce test n'est pas suffisant soit :" + lNombreMaxQuestions+ "." + "Il est égal à :" + lListQuestionsRandomSansDoublons.size());
 			}
 		}else {
 			throw new PteParametersException("Aucune Question n'exixte");
@@ -117,5 +115,14 @@ public class CreateTestServiceImpl implements TestService {
 		
 		return lConvertSetToListQuestion;
 		
+	}
+	
+	@Override
+	public Boolean countNombresQuestionsTest(Long pIdNiveau, List<Long> pIdLangages, Long pIdTypeQuestion, Long pIdCandidat) {
+		if(this.createTest(pIdNiveau, pIdLangages, pIdTypeQuestion, pIdCandidat).size()==this.nombreMaxQuestions) {
+			return Boolean.TRUE;
+		}else {
+			return Boolean.FALSE;
+		}
 	}
 }
