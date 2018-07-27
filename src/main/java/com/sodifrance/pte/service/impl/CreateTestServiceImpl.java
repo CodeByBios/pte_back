@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.collect.Sets;
 import com.sodifrance.pte.dao.LangageDao;
 import com.sodifrance.pte.dao.NiveauDao;
 import com.sodifrance.pte.dao.TypeQuestionDao;
