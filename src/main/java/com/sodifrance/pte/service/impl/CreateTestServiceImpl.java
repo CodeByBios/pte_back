@@ -64,8 +64,8 @@ public class CreateTestServiceImpl implements TestService {
 		return niveauDao.findAll();
 	}
 	
-	@Override
-	public List<Question> createTest(Long pIdNiveau, List<Long> pIdLangages, Long pIdTypeQuestion, Long pIdCandidat) {
+	
+	public Set<Question> getListQuestionsTest(Long pIdNiveau, List<Long> pIdLangages, Long pIdTypeQuestion){
 		
 		List<Question> lListQuestions = new ArrayList<Question>();
 		
@@ -76,8 +76,6 @@ public class CreateTestServiceImpl implements TestService {
 		List<Question> lListQuestionsActives = lListQuestions.stream().filter(questActif -> questActif.getEtat().equals(Boolean.TRUE)).collect(Collectors.toList());
 		
 		Set<Question> lListQuestionsRandomSansDoublons = new HashSet<Question>();
-		
-		List<Question> lConvertSetToListQuestion = new ArrayList<>(lListQuestionsRandomSansDoublons);
 		
 		if(lListQuestions!=null) {
 			Random lRandomQuestion = new Random();
@@ -91,34 +89,40 @@ public class CreateTestServiceImpl implements TestService {
 		        int randomIndex = lRandomQuestion.nextInt(lListQuestionsActives.size());
 		        Question randomElement = lListQuestionsActives.get(i);
 		        
-		        if(!lListQuestionsRandomSansDoublons.contains(randomElement) && cpt<this.nombreMaxQuestions) {
+		        if(!lListQuestionsRandomSansDoublons.contains(randomElement) && cpt< nombreMaxQuestions) {
 		        	lListQuestionsRandomSansDoublons.add(randomElement);
 		        	cpt++;
 		        }
 		    }
-
-			if(lListQuestionsRandomSansDoublons != null) {
+		}else {
+			throw new PteParametersException("Aucune Question n'exixte");
+		}
+		return lListQuestionsRandomSansDoublons;
+	}
+	
+	@Override
+	public List<Question> createTest(Long pIdNiveau, List<Long> pIdLangages, Long pIdTypeQuestion, Long pIdCandidat) {
+		
+		List<Question> lConvertSetToListQuestion = new ArrayList<>(getListQuestionsTest(pIdNiveau, pIdLangages, pIdTypeQuestion));
+		
+			if(lConvertSetToListQuestion != null) {
 				Optional<Candidat> lCandidat = candidatService.findCandidatById(pIdCandidat);
 				if(lCandidat.isPresent()) {
 					//Mise à jour des question dans candidat
-					lConvertSetToListQuestion.addAll(lListQuestionsRandomSansDoublons);
 					lCandidat.get().setQuestions(lConvertSetToListQuestion);
 					candidatService.updateCandidat(lCandidat.get());
 				}else {
 					throw new PteParametersException("Le candidat n'exixte pas");
 				}
 			}
-		}else {
-			throw new PteParametersException("Aucune Question n'exixte");
-		}
 		
 		return lConvertSetToListQuestion;
 		
 	}
 	
 	@Override
-	public Boolean countNombresQuestionsTest(Long pIdNiveau, List<Long> pIdLangages, Long pIdTypeQuestion, Long pIdCandidat) {
-		if(this.createTest(pIdNiveau, pIdLangages, pIdTypeQuestion, pIdCandidat).size()==this.nombreMaxQuestions) {
+	public Boolean countNombresQuestionsTest(Long pIdNiveau, List<Long> pIdLangages, Long pIdTypeQuestion) {
+		if(getListQuestionsTest(pIdNiveau, pIdLangages, pIdTypeQuestion).size() == nombreMaxQuestions) {
 			return Boolean.TRUE;
 		}else {
 			return Boolean.FALSE;

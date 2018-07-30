@@ -106,9 +106,9 @@ public class TestController {
 		return PteCollectionUtils.transformCollectionToList(lListQuestions, question -> questionTransform.convertToDto(question));
 	}
 	
-	@GetMapping(value = PATH_TEST_CREER + "/{idNiveau}" + "/{idLangages}" + "/{idTypeQuestion}" + "/{idCandidat}")
-	public Boolean countNombresQuestionsTest(@PathVariable Long idNiveau, @PathVariable List<Long> idLangages, @PathVariable Long idTypeQuestion, @PathVariable Long idCandidat) throws Exception {
+	@GetMapping(value = PATH_TEST_CREER + "/{idNiveau}" + "/{idLangages}" + "/{idTypeQuestion}")
+	public Boolean countNombresQuestionsTest(@PathVariable Long idNiveau, @PathVariable List<Long> idLangages, @PathVariable Long idTypeQuestion) throws Exception {
 		log.debug("Return true our false");
-		return testService.countNombresQuestionsTest(idNiveau, idLangages, idTypeQuestion, idCandidat);
+		return testService.countNombresQuestionsTest(idNiveau, idLangages, idTypeQuestion);
 	}
 }
