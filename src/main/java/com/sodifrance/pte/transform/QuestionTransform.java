@@ -90,6 +90,7 @@ public class QuestionTransform {
 		if(pQuestionDto !=null) {
 			lQuestion.setLibelle(pQuestionDto.getLibelle());
 			lQuestion.setEtat(pQuestionDto.getEtat());
+			lQuestion.setCode(pQuestionDto.getCode());
 			
 			//pQuestionDto.setTypeQuestionDto(typeQuestionTransform.convertToDto(lQuestion.getTypeQuestion()));
 			
@@ -132,25 +133,7 @@ public class QuestionTransform {
 			});
 			lQuestion.setNiveaux(lNiveaux);
 			
-			
-			 ///BeanUtils.copyProperties(pQuestionDto, lQuestion);
 		}
-		
-		/*if(CollectionUtils.isEmpty(lQuestion.getLangages())) {
-			lQuestion.setLangages(null);
-		}else {
-			lQuestion.setLangages(lQuestion.getLangages().stream().map(langage -> langageService.findLangageById(langage.getId()).get()).collect(Collectors.toSet()));
-		}
-		if(CollectionUtils.isEmpty(lQuestion.getLangages())) {
-			lQuestion.setLangages(null);
-		}else {
-			lQuestion.setNiveaux(lQuestion.getNiveaux().stream().map(niveau -> niveauService.findNiveauById(niveau.getId()).get()).collect(Collectors.toSet()));
-		}
-		if(CollectionUtils.isEmpty(lQuestion.getReponses())) {
-			lQuestion.setLangages(null);
-		}else {
-			lQuestion.setReponses(lQuestion.getReponses().stream().map(reponse -> reponseService.findReponseById(reponse.getId()).get()).collect(Collectors.toSet()));
-		}*/
 
 		return lQuestion;
 	}
@@ -178,23 +161,12 @@ public class QuestionTransform {
 		ModelMapper modelMapper = new ModelMapper();
 		
 		QuestionDto lQuestionDto = modelMapper.map(pQuestion, QuestionDto.class);
-		
 		//QuestionDto lQuestionDto = new QuestionDto();
 
 		lQuestionDto.setTypeQuestionDto(typeQuestionTransform.convertToDto(pQuestion.getTypeQuestion()));
 		lQuestionDto.setNiveauDto(niveauTransform.convertListEntityToListDto(pQuestion.getNiveaux()));
 		lQuestionDto.setLangageDto(langageTransform.convertListEntityToListDto(pQuestion.getLangages()));
 		lQuestionDto.setReponseDto(reponseTransform.convertListEntityToListDto(pQuestion.getReponses()));
-
-		/*if (!CollectionUtils.isEmpty(lQuestionDto.getNiveauDto())) {o
-			lQuestionDto.setNiveauDto(pQuestion.getNiveaux().stream().map(NiveauDto::new).collect(Collectors.toSet()));
-		}
-		if (!CollectionUtils.isEmpty(lQuestionDto.getLangageDto())) {
-			lQuestionDto.setLangageDto(pQuestion.getLangages().stream().map(LangageDto::new).collect(Collectors.toSet()));
-		}
-		if (!CollectionUtils.isEmpty(lQuestionDto.getReponseDto())) {
-			lQuestionDto.setReponseDto(pQuestion.getReponses().stream().map(ReponseDto::new).collect(Collectors.toSet()));
-		}*/
 
 		return lQuestionDto;
 	}

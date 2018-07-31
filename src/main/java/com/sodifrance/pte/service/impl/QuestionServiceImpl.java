@@ -82,6 +82,7 @@ public class QuestionServiceImpl extends AbstractServiceImpl<Question> implement
 				} else {
 					lQuestion.setEtat(pQuestionUpdate.getEtat());
 					lQuestion.setLibelle(pQuestionUpdate.getLibelle());
+					lQuestion.setCode(pQuestionUpdate.getCode());
 					lQuestion.setLangages(pQuestionUpdate.getLangages());
 					lQuestion.setNiveaux(pQuestionUpdate.getNiveaux());
 					lQuestion.setTypeQuestion(pQuestionUpdate.getTypeQuestion());

@@ -15,6 +15,8 @@ public class QuestionDto implements Serializable {
 	
 	private String libelle;
 	
+	private String code;
+	
 	private Boolean etat = Boolean.TRUE;
 	
 	private List<LangageDto> langageDto;

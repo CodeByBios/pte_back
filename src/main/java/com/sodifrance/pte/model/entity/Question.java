@@ -40,6 +40,8 @@ public class Question implements Serializable {
 	@NotNull
 	Boolean etat;
 	
+	String code;
+	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	List<Reponse> reponses = new ArrayList<Reponse>();
 	
@@ -48,9 +50,6 @@ public class Question implements Serializable {
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	List<Niveau> niveaux = new ArrayList<Niveau>();
-	
-	/*@ManyToMany(fetch = FetchType.LAZY)
-    List<Candidat> candidats = new ArrayList<Candidat>();*/
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "typequestion_id")
@@ -62,11 +61,12 @@ public class Question implements Serializable {
 	}
 
 	public Question(Long id, @NotNull @Size(min = 2, max = 755) String libelle, @NotNull Boolean etat,
-			List<Reponse> reponses, List<Langage> langages, List<Niveau> niveaux, TypeQuestion typeQuestion) {
+			String code, List<Reponse> reponses, List<Langage> langages, List<Niveau> niveaux, TypeQuestion typeQuestion) {
 		super();
 		this.id = id;
 		this.libelle = libelle;
 		this.etat = etat;
+		this.code = code;
 		this.reponses = reponses;
 		this.langages = langages;
 		this.niveaux = niveaux;
