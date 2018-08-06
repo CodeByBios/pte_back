@@ -47,7 +47,7 @@ public class CreateTestServiceImpl implements TestService {
 	@Autowired
 	private QuestionService questionService;
 	
-	private int nombreMaxQuestions = 10; //TODO modifier pour 20 questions
+	private int nombreMaxQuestions = 2; //TODO modifier pour 20 questions
 	
 	@Override
 	public List<Langage> getListLangages(){

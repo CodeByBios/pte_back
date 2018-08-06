@@ -38,6 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/pte/v1/niveaux").permitAll()//
         .antMatchers("/pte/v1/typesquestions").permitAll()//
         .antMatchers(HttpMethod.GET, "/pte/v1/questions").permitAll()//
+        .antMatchers(HttpMethod.POST, "/pte/v1/questionrepondu").permitAll()//
         // Disallow everything else..
         .anyRequest().authenticated();
 

@@ -1,7 +1,6 @@
 package com.sodifrance.pte.ws;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sodifrance.pte.exceptions.PteParametersException;
 import com.sodifrance.pte.model.dto.InfoQuestionDto;
 import com.sodifrance.pte.model.dto.QuestionDto;
-import com.sodifrance.pte.model.entity.Niveau;
 import com.sodifrance.pte.model.entity.Question;
 import com.sodifrance.pte.service.QuestionService;
 import com.sodifrance.pte.transform.QuestionTransform;
